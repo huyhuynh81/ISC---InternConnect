@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:background="@drawable/border"
+                android:id="@+id/HoTroTitle"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Các câu hỏi thường gặp"
+                android:textSize="17dp"
+                android:padding="7dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/arial"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="350dp"
+                android:id="@+id/Q1_layout"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/HoTroTitle"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/Q1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tôi không biết cách viết CV thì phải làm thế nào ?"
+                    android:textSize="15dp"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:justificationMode="inter_word"
+                    android:padding="7dp"
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/arial"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Q1"
+                    android:id="@+id/R1"
+                    android:padding="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="Intern Connect có nhiều bài viết hướng dẫn và hỗ trợ bạn viết CV theo đúng chuẩn của nhà tuyển dụng."
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/Q2_layout"
+                android:background="@drawable/border"
+                android:layout_below="@+id/Q1_layout"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/Q2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tôi không tìm thấy nhóm ngành của mình"
+                    android:textSize="15dp"
+                    android:textColor="@android:color/black"
+                    android:layout_centerHorizontal="true"
+                    android:padding="7dp"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="5dp"
+                    android:fontFamily="@font/arial"
+                    android:justificationMode="inter_word"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Q2"
+                    android:id="@+id/R2"
+                    android:fontFamily="@font/arial"
+                    android:layout_centerHorizontal="true"
+                    android:padding="10dp"
+                    android:text="Hiện tại Intern Connect mới có những ngành chính và phổ biến, những nhóm ngành ít phổ biến hơn sẽ được nhanh chóng cập nhật sau. Bạn có thể đề xuất chúng tôi qua email hptservices.group@gmail.com về nhóm ngành của bạn. "
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="350dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/Q3_layout"
+                android:background="@drawable/border"
+                android:layout_below="@+id/Q2_layout"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/Q3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@android:color/black"
+                    android:text="Làm thế nào để được dịch và chỉnh sửa CV ?"
+                    android:textSize="15dp"
+                    android:fontFamily="@font/arial"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Q3"
+                    android:id="@+id/R3"
+                    android:padding="10dp"
+                    android:fontFamily="@font/arial"
+                    android:text="Sau khi bạn tạo xong CV, mặc định Internt Connect sẽ hỗ trợ đánh giá CV của bạn, sau đó bạn cập nhật lại CV của mình và gửi email về hotro@interntconnect.com để được dịch CV.Internt Connect sẽ gửi bản dịch cho bạn qua email. "
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word">
+                </TextView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/Q4_layout"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Q3_layout"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border">
+
+                <TextView
+                    android:id="@+id/Q4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/arial"
+                    android:justificationMode="inter_word"
+                    android:lineSpacingExtra="5dp"
+                    android:padding="7dp"
+                    android:text="Tạo sao CV nên được để ở định dang PDF ?"
+                    android:textColor="@android:color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/R4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Q4"
+                    android:fontFamily="@font/arial"
+                    android:justificationMode="inter_word"
+                    android:lineSpacingExtra="5dp"
+                    android:padding="10dp"
+                    android:text="CV của bạn tốt nhất nên được để ở dạng PDF để tránh những trường hợp bị lỗi như (hình ảnh, font chữ, cách đoạn…) khi xuất file hoặc CV bị người khác vô tình hay cố ý chỉnh sửa.">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:background="@drawable/border"
+                android:layout_width="350dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/Q5_layout"
+                android:layout_below="@+id/Q4_layout"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/Q5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:padding="7dp"
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/arial"
+                    android:text="Dữ liệu của tôi có được bảo mật không ?"
+                    android:textSize="15dp"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word"/>
+
+                <TextView
+                    android:fontFamily="@font/arial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Q5"
+                    android:id="@+id/R5"
+                    android:padding="10dp"
+                    android:text="Internt Connect cam kết đảm bảo mọi thông tin liên quan đến dữ liệu của bạn"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word">
+
+                </TextView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:background="@drawable/border"
+                android:layout_width="350dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/Q7_layout"
+                android:layout_below="@+id/Q5_layout"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/Q7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tôi không đăng nhập được tài khoản đã tạo ?"
+                    android:textSize="15dp"
+                    android:padding="7dp"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/arial"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Q7"
+                    android:id="@+id/R7"
+                    android:padding="10dp"
+                    android:fontFamily="@font/arial"
+                    android:text="-	Nếu đây là lần đầu tiên bạn sử dụng Internt Connect, vui lòng đăng ký tài khoản trước"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/R7"
+                    android:id="@+id/R7_1"
+                    android:padding="10dp"
+                    android:fontFamily="@font/arial"                    android:text="-	Nếu bạn đã tạo tài khoản trươc đó mà không nhớ chính xác mật khẩ, có thể lấy lại mật khẩu tại đây hoặc gửi email hỗ trợ tới hotro@interntconnect.com"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word">
+
+                </TextView>
+
+
+            </RelativeLayout>
+
+
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+
+        android:layout_width="350dp"
+        android:id="@+id/user_layout"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginTop="15dp"
+            android:background="@drawable/user"
+            android:layout_width="50dp"
+            android:layout_gravity="center"
+            android:layout_height="50dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:layout_marginVertical="10dp"
+            android:layout_height="wrap_content"
+            android:text="Tên Admin"
+            android:id="@+id/txtUsername1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/border"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/user_layout"
+        android:orientation="vertical"
+        android:id="@+id/setting">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/password_setting"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:background="@drawable/ic_baseline_lock_24"
+                android:layout_width="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_height="30dp"/>
+
+
+            <Button
+                android:id="@+id/btnDoiMatkhau"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:gravity="left|center"
+                android:paddingLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textAllCaps="false"
+                android:text="Đổi mật khẩu"
+                android:background="@android:color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/Thongbao_setting"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:background="@drawable/ic_baseline_notifications_24"
+                android:layout_width="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_height="30dp"/>
+
+            <Button
+                android:id="@+id/btnThongbao"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:gravity="left|center"
+                android:paddingLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textAllCaps="false"
+                android:background="@android:color/white"
+                android:text="Cài Đặt thông báo" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/aboutus"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:background="@drawable/ic_baseline_info_24"
+                android:layout_width="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_height="30dp"/>
+
+            <Button
+                android:id="@+id/btnInternConnect"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:gravity="left|center"
+                android:paddingLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@android:color/white"
+                android:textAllCaps="false"
+                android:text="Về Intern Connect" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/dieukhoandv"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:background="@drawable/ic_baseline_sticky_note_2_24"
+                android:layout_width="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_height="30dp"/>
+
+            <Button
+                android:id="@+id/btnDieuKhoan"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:gravity="left|center"
+                android:paddingLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@android:color/white"
+                android:textAllCaps="false"
+                android:text="Điều khoản dịch vụ" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/Chinhsachbaomat"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:background="@drawable/ic_baseline_menu_book_24"
+                android:layout_width="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_height="30dp"/>
+
+            <Button
+                android:id="@+id/btnChinhSach"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:gravity="left|center"
+                android:paddingLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@android:color/white"
+                android:textAllCaps="false"
+                android:text="Chính sách bảo mật" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/btnLogout"
+                style="@style/loginButton"
+                android:layout_width="150dp"
+                android:layout_height="38dp"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:text="Đăng Xuất" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="15dp"
+                android:hint="Phiên bản ứng dụng 1.0"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

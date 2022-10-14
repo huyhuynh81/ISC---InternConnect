@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    style="@style/loginParent"
+    tools:context="com.example.internship.MainActivity">
+    <RelativeLayout
+        style="@style/parent"
+        android:id="@+id/search_item"
+        android:background="@drawable/login_shape_bk"
+        android:orientation="vertical"
+        android:layout_weight="3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/user_layout"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/imgUser"
+                android:background="@drawable/user"
+                android:layout_width="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_height="40dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="17dp"
+                android:fontFamily="@font/arial"
+                android:layout_marginLeft="15dp"
+                android:layout_height="wrap_content"
+                android:text="Xin chào," />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="17dp"
+                android:fontFamily="@font/arial"
+                android:layout_height="wrap_content"
+                android:hint="Tên người dùng"
+                android:id="@+id/txtUsername"/>
+
+            <ImageButton
+                android:id="@+id/imgMessage"
+                android:background="@drawable/messages"
+                android:layout_marginLeft="100dp"
+                android:layout_width="40dp"
+                android:layout_gravity="right|center"
+                android:layout_height="40dp"/>
+
+        </LinearLayout>
+        <SearchView
+            android:id="@+id/sr_Job"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="10dp"
+            android:queryHint="Search Here"
+            android:layout_below="@+id/user_layout"
+            android:iconifiedByDefault="false"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:layout_marginTop="110dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclere_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+</RelativeLayout>

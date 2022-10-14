@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/loginCard"
+    app:cardCornerRadius="@dimen/loginCardRadius"
+    android:elevation="5dp"
+    android:layout_gravity="center"
+    android:layout_marginTop="100dp"
+    android:layout_marginBottom="@dimen/loginViewsMargin"
+    android:background="@color/whiteCardColor">
+
+
+
+    <LinearLayout
+        style="@style/linearParent"
+        android:layout_gravity="center"
+        android:padding="@dimen/loginViewsMargin">
+
+        <TextView
+            style="@style/headerTextPrimary"
+            android:text="Forgot Password"
+            android:layout_marginTop="@dimen/loginViewsMargin"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputCurrentPhone"
+            style="@style/parent"
+            android:layout_marginTop="@dimen/loginViewsMargin">
+            <RelativeLayout
+
+                android:layout_width="350dp"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/edtPhoneLogin"
+                    style="@style/modifiedEditText"
+                    android:hint="Phone"
+                    android:maxLines="1"
+                    android:inputType="phone"/>
+            </RelativeLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputNewPassword"
+            style="@style/parent"
+            android:layout_marginTop="@dimen/loginViewsMargin">
+            <RelativeLayout
+
+                android:layout_width="350dp"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/edtNewpass"
+                    style="@style/modifiedEditText"
+                    android:hint="New password"
+                    android:maxLines="1"
+                    android:inputType="textPassword"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/imgShowPassNew"
+                        android:layout_width="20dp"
+                        android:layout_marginLeft="280dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_baseline_visibility_off_24">
+                    </ImageView>
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputPassword"
+            style="@style/parent"
+            android:layout_marginTop="@dimen/loginViewsMargin">
+            <RelativeLayout
+
+                android:layout_width="350dp"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/edtRenew_Pass"
+                    style="@style/modifiedEditText"
+                    android:hint="Re-enter password"
+                    android:maxLines="1"
+                    android:inputType="textPassword"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/imgShowPassNew1"
+                        android:layout_width="20dp"
+                        android:layout_marginLeft="280dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_baseline_visibility_off_24">
+                    </ImageView>
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btnChangePass"
+            style="@style/loginButton"
+            android:text="Save change"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/loginViewsMargin"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

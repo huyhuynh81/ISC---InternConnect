@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "362124244719",
+    "firebase_url": "https://intern-connect-8dcd2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "intern-connect-8dcd2",
+    "storage_bucket": "intern-connect-8dcd2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362124244719:android:fb644ddf1a7c04acdccd1a",
+        "android_client_info": {
+          "package_name": "com.example.internship"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362124244719-mpbdds6001rndabik1lcvp5437f31g49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdwkYlOfTysCLKOldS6RCmrQm43mQrUps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362124244719-mpbdds6001rndabik1lcvp5437f31g49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/txtAboutUs"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:fontFamily="@font/arial"
+                android:text="Về Intern Connect"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/background_dark"/>
+
+            <LinearLayout
+                android:id="@+id/about1"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtAboutUs"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tuyển dụng công nghệ số"
+                    android:textSize="15dp"
+                    android:textColor="@android:color/background_dark"
+                    android:fontFamily="@font/arial"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:fontFamily="@font/arial"
+                    android:layout_width="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:justificationMode="inter_word"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Nền tảng ứng dụng sâu trong công nghệ AI,chủ động tìm và gợi ý ứng viên phù hợp"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/about2"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/about1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Ứng dụng tìm việc thông minh"
+                    android:textSize="15dp"
+                    android:textColor="@android:color/background_dark"
+                    android:fontFamily="@font/arial"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:justificationMode="inter_word"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:fontFamily="@font/arial"
+                    android:layout_width="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ứng dụng tự động gợi ý công việc phù hợp với nhu cầu của ứng viên. Tích hợp nhiều tính năng nổi bật giúp ứng viên không chỉ tìm việc, ứng tuyển một cách nhanh chóng mà còn phát triển bản thân thông qua nhiều công việc hữu ích"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/about3"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/about2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <TextView
+                    android:padding="10dp"
+                    android:fontFamily="@font/arial"
+                    android:textColor="@android:color/background_dark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Công cụ tạo CV"
+                    android:textSize="15dp"
+                    android:layout_marginBottom="2dp"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word"
+                    android:padding="10dp"
+                    android:fontFamily="@font/arial"
+                    android:layout_height="wrap_content"
+                    android:text="Công cụ tạo CV Online giúp người tìm việc tăng 80% thành công."
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Về chúng tôi"
+                android:layout_marginLeft="40dp"
+                android:id="@+id/vechungtoi"
+                android:textColor="@android:color/background_dark"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                android:fontFamily="@font/arial"
+                android:layout_below="@+id/about3">
+            </TextView>
+            <LinearLayout
+                android:id="@+id/about4"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vechungtoi"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <TextView
+                    android:padding="10dp"
+                    android:textColor="@android:color/background_dark"
+                    android:fontFamily="@font/arial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tuyển dụng công nghệ số"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="15dp"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:fontFamily="@font/arial"
+                    android:layout_width="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:justificationMode="inter_word"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Kết nối đúng người đúng việc là mội bài toán rất khó ở Việt Nam, là thách thức cho bất kỳ nền tảng tuyển dụng nào. Với mục tiêu ứng dụng công nghệ để thay đổi thị trường truyển dụng, nhân sự ngày càng hiệu quả hơn, đầu năm 2020, ý tưởng về Intert Connect ra đời.
+Bằng công nghệ, chúng tôi tạo ra nền tảng cho phép các bạn sinh viên có thể tìm được việc thực tập, tìm hiểu về các công ty và tương tác với các nhà tuyển dụng.
+Tập trung vào trải nghiệm dành của ứng viên khi tìm việc thực tập, mục tiêu của Internt Connert là mang đến một nền tảng toàn diện, giúp ứng viên phát triển được các kỹ năng các nhân, xây dựng hình ảnh chuyên nghiệp trong mắt nhà truyển dụng và tiếp cận với các cơ hội việc làm phù hợp"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

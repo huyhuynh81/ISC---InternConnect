@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Intern Connect</string>
+    <string name="register">REGISTER</string>
+    <string name="login_phone_hint">Phone</string>
+    <string name="login_password_hint">Password</string>
+    <string name="signup_login_hint">Already have an account?</string>
+    <string name="login_signup_hint">Don\'t have an account?</string>
+
+</resources>

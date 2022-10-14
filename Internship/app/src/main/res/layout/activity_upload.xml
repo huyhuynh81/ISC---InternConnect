@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/UploadCV"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/border"
+                android:gravity="center_horizontal"
+                android:text="Upload CV"
+                android:textSize="17dp"
+                android:textColor="@android:color/background_dark"
+                android:fontFamily="@font/arial"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/TaiCVTuPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/UploadCV"
+                android:layout_marginLeft="30dp"
+                android:text="Tải CV từ điện thoại"
+                android:textSize="15dp"
+                android:textColor="@android:color/background_dark"
+                android:fontFamily="@font/arial"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"/>
+
+            <RelativeLayout
+                android:id="@+id/TaiCV"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TaiCVTuPhone"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/border">
+
+                <Button
+                    android:id="@+id/btnUpload"
+                    style="@style/loginButton"
+                    android:layout_width="150dp"
+                    android:layout_height="38dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:text="Tải CV" />
+
+                <TextView
+                    android:id="@+id/txtPath"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_below="@+id/btnUpload"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="Tên File" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/ThuGioiThieu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TaiCV"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:text="Thư giới thiệu"
+                android:textSize="15dp"
+                android:textColor="@android:color/background_dark"
+                android:fontFamily="@font/arial"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/Thugioithieu_layout"
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_below="@+id/ThuGioiThieu"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border">
+
+                <TextView
+                    android:id="@+id/txtThuGioiThieu"
+                    android:justificationMode="inter_word"
+
+                    android:lineSpacingExtra="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center"
+                    android:padding="20dp"
+                    android:hint="Giới thiệu ngắn gọn về bản thân. Mong muốn và lý do muốn làm việc tại công ty">
+
+                </TextView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/Luuy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Thugioithieu_layout"
+                android:layout_marginLeft="30dp"
+                android:text="Lưu ý"
+                android:textSize="15dp"
+                android:textColor="@android:color/background_dark"
+                android:fontFamily="@font/arial"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:id="@+id/LuuY1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:layout_below="@+id/Luuy"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:fontFamily="@font/arial"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="1. Ứng viên nên lựa chọn ứng tuyển bằng CV Online và viết thêm mong muốn tại phần thư giới thiệu để được Nhà tuyển dụng xem CV sớm hơn."
+                android:textSize="15dp"
+                android:lineSpacingExtra="5dp"/>
+
+            <TextView
+                android:id="@+id/LuuY2"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:layout_below="@+id/LuuY1"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:lineSpacingExtra="5dp"
+                android:text="2. Trước tình trạng gia tăng các hình thức lừa đảo việc làm trên internet được các cơ quan chức năng cảnh báo, Intern Connect xin lưu ý bạn một số dấu hiệu lừa đảo việc làm như sau:"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="15dp" />
+
+
+            <LinearLayout
+                android:id="@+id/image_4"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/LuuY2"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+                <ViewFlipper
+                    android:id="@+id/simpleFlipper"
+                    android:background="@drawable/border"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="350dp"
+                        android:layout_height="220dp"
+                        android:src="@drawable/warning_pay">
+                    </ImageView>
+                    <ImageView
+                        android:layout_width="350dp"
+                        android:layout_height="220dp"
+                        android:src="@drawable/warning_payphone">
+                    </ImageView>
+                </ViewFlipper>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/button_ungtuyen"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@+id/image_4"
+                android:layout_gravity="center"
+                android:layout_margin="30dp">
+
+                <Button
+                    android:id="@+id/btnQuaylai"
+                    style="@style/loginButton"
+                    android:layout_width="150dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border_button"
+                    android:text="Quay lại"
+                    android:textColor="@color/colorAccent" />
+
+                <Button
+                    android:id="@+id/btnApply"
+                    style="@style/loginButton"
+                    android:layout_width="150dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:text="Ứng tuyển ngay" />
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+
+
+</RelativeLayout>

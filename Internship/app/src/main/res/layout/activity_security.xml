@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:background="@drawable/border"
+                android:id="@+id/CSBMTitle"
+                android:layout_width="350dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Chính sách bảo mật"
+                android:textSize="17dp"
+                android:layout_margin="10dp"
+                android:textColor="@android:color/background_dark"
+                android:fontFamily="@font/arial"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:background="@drawable/border"
+                android:id="@+id/CSBMLayout"
+                android:layout_width="360dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/CSBMTitle"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/CSBMtxt"
+                    android:layout_width="350dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="Chính sách bảo mật thông tin người dùng"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/arial"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16dp" />
+
+                <RelativeLayout
+                    android:id="@+id/ChinhSachItems"
+                    android:layout_width="350dp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/CSBMtxt"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/CS0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:justificationMode="inter_word"
+                        android:lineSpacingExtra="3dp"
+                        android:padding="10dp"
+                        android:fontFamily="@font/arial"
+                        android:text="Sự riêng tư của bạn là yếu tố quan trọng đối với Intern Connect.Vui lòng đọc kỹ Chính Sách Bảo Mật vì nó là một phần của Điều Khoản Sử Dụng nhằm quản lý việc sử dụng các Dịch Vụ trên ứng dụng Intern Connect.Thông Báo Chính Sách này giải thích:"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/CSmau"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/arial"
+                        android:layout_height="wrap_content"
+                        android:justificationMode="inter_word"
+                        android:lineSpacingExtra="3dp"
+                        android:layout_below="@+id/CS0"
+                        android:layout_marginLeft="30dp"
+                        android:padding="5dp"
+                        android:text="• Loại thông tin cá nhân của bản được Intern Connect xử lý khi bạn sử dụng các Dịch vụ của Intern Connect.
+\n• Cách thức Intern Connect xử lý thông tin cá nhân của bạn khi bạn sử dụng các Dịch Vụ của Intern Connect.
+\n• Mục đích Intern Connect thu thập và xử lý thông tin cá nhân của bạn.
+\n• Quyền truy cập và chỉnh sửa thông tin cá nhân của bạn.
+\n• Các bên thứ ba mà Intern Connect có thể công bố thông tin cá nhân của bạn.
+\n• Tính bắt buộc hoặc tự nguyện đối với việc cung cấp thông tin cá nhân và hậu quả khi bạn từ chối cung cấp thông tin cá nhân trong trường hợp bắt buộc.
+\n• Cách thức Intern Connect giữ gìn sự bảo mật và an ninh về thông tin cá nhân của bạn."
+                        android:textSize="15dp" />
+
+
+                    <TextView
+                        android:id="@+id/CS1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/CSmau"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/arial"
+                        android:padding="5dp"
+                        android:text="1. Thu thập thông tin cá nhân"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/CS1_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/CS1"
+                        android:layout_margin="10dp"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="7dp"
+                        android:layout_marginBottom="7dp"
+                        android:fontFamily="@font/arial"
+                        android:padding="5dp"
+                        android:text="1.1 Khi đăng ký Dịch vụ của Intern Connect"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/CS1_1.1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/CS1_1"
+                        android:lineSpacingExtra="5dp"
+                        android:layout_marginLeft="30dp"
+                        android:justificationMode="inter_word"
+                        android:padding="5dp"
+                        android:textSize="15dp"
+                        android:fontFamily="@font/arial"
+                        android:text="• Khi đăng ký bất cứ Dịch vụ của Intern Connect, bạn sẽ được yêu cầu cung cấp một số thông tin cá nhân nhất định để thiết lập tài khoản của bạn, để xác thực danh tính theo quy định của pháp luật hiện hành.
+                    \n• Bất cứ thông tin cá nhân nào do Intern Connect yêu cầu được đánh dấu \'Bắt buộc', bạn phải cung cấp và đồng ý để Intern Connect xử lý thông tin này. Nếu bạn không đồng ý cung cấp thông tin cá nhân này và/hoặc không đồng ý để chúng tôi xử lý thông tin theo quy định tại Thông Báo Chính Sách này. Intern Connect sẽ không thể cung cấp các dịch vụ liên quan và việc đăng ký dịch vụ của bạn sẽ bị từ chối."
+                        />
+
+                    <TextView
+                        android:id="@+id/CS1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/CS1_1.1"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/arial"
+                        android:lineSpacingExtra="2dp"
+                        android:padding="5dp"
+                        android:textStyle="bold"
+                        android:text="1.2 Từ việc sử dụng các Dịch vụ của Intern Connect của bạn"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="15dp" />
+
+
+                    <TextView
+                        android:id="@+id/CS1_2.1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/CS1_2"
+                        android:lineSpacingExtra="5dp"
+                        android:layout_marginLeft="30dp"
+                        android:justificationMode="inter_word"
+                        android:padding="5dp"
+                        android:textSize="15dp"
+                        android:fontFamily="@font/arial"
+                        android:text="•	Chúng tôi thu thập thông tin các nhân trực tiếp từ bạn khi bạn chọn lựa tham gia vào bất kỳ Dịch vụ nào của TopCV. Dưới đây là các ví dụ về thông tin cá nhân mà TopCV có thể thu thập trực tiếp từ bạn: tuổi, ngày sinh, điện thoại cố định hoặc số điện thoại di động, hình ảnh cá nhân, kinh nghiệm làm việc, các thông tin khác liên quan đến Hồ sơ việc làm (CV) của bạn:
+\n•	Nếu bạn lựa chọn để thêm người giới thiệu trong hồ sơ, Internt Connect sẽ yêu cầu tên, số điện thoại, Email, vị trí công việc và các thông tin cụ thể khác của những người này. Thông tin này sẽ được đính kèm trong hồ sơ xin việc của bạn và nhà tuyển dụng có thể liên lạc họ để lấy thông tin tham khảo cho hồ sơ xin việc của bạn.
+\n•	Nếu bạn muốn Internt Connect ngưng xử lý thông tin cá nhân của bạn, Internt Connect sẽ không thể cung cấp các dịch vụ liên quan cho bạn."
+                        />
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
