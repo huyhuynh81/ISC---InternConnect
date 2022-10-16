@@ -1,29 +1,52 @@
 package com.example.internship;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.internship.Model.Account;
 import com.example.internship.Model.JobPost;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DetailsPostAdActivity extends AppCompatActivity {
 
     ImageView imgLogo_Details;
     EditText edtPosition_Details, edtName_Details, edtLocation_Details, edtSalary_Details, edtGender_Details,
             edtRequired_Details, edtBenefit_Details, edtNumber_Details;
-    Button btnUpdatePost, btnDelete;
+    Button btnUpdatePost, btnDeletePost, btnCancel, btnXoaPost;
     ProgressDialog progressDialog;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_post_ad);
+        dialog = new Dialog(this);
+        Account Username = (Account) getIntent().getSerializableExtra("acc");
         JobPost cpn = (JobPost) getIntent().getSerializableExtra("obj_cpn");;
         edtPosition_Details = findViewById(R.id.edtPosition_Details);
         edtName_Details = findViewById(R.id.edtName_Details);
@@ -45,9 +68,8 @@ public class DetailsPostAdActivity extends AppCompatActivity {
         String image = cpn.getLogo();
         Picasso.with(this).load(image).into(imgLogo_Details);
 
-        btnDelete = (Button) findViewById(R.id.btnDelete);
         btnUpdatePost = (Button) findViewById(R.id.btnUpdatePost);
-
+        btnXoaPost = (Button) findViewById(R.id.btnXoaPost);
         edtPosition_Details.setEnabled(false);
         edtName_Details.setEnabled(false);
         edtLocation_Details.setEnabled(false);
@@ -61,12 +83,22 @@ public class DetailsPostAdActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressDialog = new ProgressDialog(DetailsPostAdActivity.this);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 progressDialog.show();
+                progressDialog.setTitle("Connecting");
+
+                Runnable progressRunable = new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.cancel();
+                    }
+                };
+                Handler pdCanceller = new Handler();
+                pdCanceller.postDelayed(progressRunable, 500);
                 progressDialog.setContentView(R.layout.progress_dialog);
                 progressDialog.getWindow().setBackgroundDrawableResource(
                         android.R.color.transparent
                 );
-                onBackPressed();
                 edtPosition_Details.setEnabled(true);
                 edtName_Details.setEnabled(true);
                 edtNumber_Details.setEnabled(true);
@@ -76,20 +108,143 @@ public class DetailsPostAdActivity extends AppCompatActivity {
                 edtRequired_Details.setEnabled(true);
                 edtBenefit_Details.setEnabled(true);
 
+                btnUpdatePost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        progressDialog = new ProgressDialog(DetailsPostAdActivity.this);
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        progressDialog.show();
+                        progressDialog.setTitle("Connecting");
+
+                        Runnable progressRunable = new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.cancel();
+                            }
+                        };
+                        Handler pdCanceller = new Handler();
+                        pdCanceller.postDelayed(progressRunable,500);
+                        progressDialog.setContentView(R.layout.progress_dialog);
+                        progressDialog.getWindow().setBackgroundDrawableResource(
+                                android.R.color.transparent
+                        );
+                        edtPosition_Details.setEnabled(false);
+                        edtName_Details.setEnabled(false);
+                        edtLocation_Details.setEnabled(false);
+                        edtNumber_Details.setEnabled(false);
+                        edtSalary_Details.setEnabled(false);
+                        edtGender_Details.setEnabled(false);
+                        edtRequired_Details.setEnabled(false);
+                        edtBenefit_Details.setEnabled(false);
+                        String _Name = edtName_Details.getText().toString();
+                        FirebaseDatabase db = FirebaseDatabase.getInstance();
+                        DatabaseReference reference = db.getReference("JobPost");
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("Benefit",edtBenefit_Details.getText().toString().trim());
+                        map.put("Gender",edtGender_Details.getText().toString().trim());
+                        map.put("Location",edtLocation_Details.getText().toString().trim());
+                        map.put("Name",edtName_Details.getText().toString().trim());
+                        map.put("Position",edtPosition_Details.getText().toString().trim());
+                        map.put("Required",edtRequired_Details.getText().toString().trim());
+                        map.put("Salary",edtSalary_Details.getText().toString().trim());
+                        map.put("Number",edtNumber_Details.getText().toString().trim());
+                        reference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                reference.child(edtName_Details.getText().toString().trim()).updateChildren(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(DetailsPostAdActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                });
             }
         });
-
-        btnDelete.setOnClickListener(new View.OnClickListener() {
+        btnXoaPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(Detail_edit.this, SupportActivity.class);
-//                startActivity(intent);
+                openApplyPopup(Gravity.CENTER);
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        progressDialog.dismiss();
+    private void openApplyPopup(int gravity) {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_popup_delete);
+
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+        btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+        btnDeletePost = (Button) dialog.findViewById(R.id.btnDeletePost);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference reference = db.getReference("JobPost");
+        btnDeletePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressDialog = new ProgressDialog(DetailsPostAdActivity.this);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.show();
+                progressDialog.setTitle("Connecting");
+
+                Runnable progressRunable = new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.cancel();
+                    }
+                };
+                Handler pdCanceller = new Handler();
+                pdCanceller.postDelayed(progressRunable,500);
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(
+                        android.R.color.transparent);
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        reference.child(edtName_Details.getText().toString().trim()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(DetailsPostAdActivity.this, "Delete Successfully", Toast.LENGTH_SHORT).show();
+//                                Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
+//                                intent.putExtra("obj_acc", Account.class);
+//                                startActivity(intent);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+        dialog.show();
     }
+
 }

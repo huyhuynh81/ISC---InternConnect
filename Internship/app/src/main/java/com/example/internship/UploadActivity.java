@@ -5,15 +5,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -57,14 +65,11 @@ public class UploadActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     ActivityResultLauncher<Intent> resultLauncher;
     ViewFlipper simpleFlipper;
-    String email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
-        email = "hptservices.group@gmail.com";
-        password = "Hpt@1234";
         dialog = new Dialog(this);
         btnUpload = (Button) findViewById(R.id.btnUpload);
         btnApply = (Button) findViewById(R.id.btnApply);
@@ -103,7 +108,6 @@ public class UploadActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -115,30 +119,8 @@ public class UploadActivity extends AppCompatActivity {
                 btnApply.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Properties properties = new Properties();
-                        properties.put("mail.smtp.auth", "true");
-                        properties.put("mail.smtp.starttls.enable", "true");
-                        properties.put("mail.smtp.host", "smtp.gmail.com");
-                        properties.put("mail.smtp.port", "648");
-
-                        Session session = Session.getInstance(properties, new Authenticator() {
-                            @Override
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return new PasswordAuthentication(email, password);
-                            }
-                        });
-
-                        try {
-                            MimeMessage message = new MimeMessage(session);
-                            message.setFrom(new InternetAddress(email));
-                            message.addRecipient(Message.RecipientType.TO, new InternetAddress("huyhuynh811@gmail.com"));
-                            message.setSubject("[ISC|Intern] Thực tập sinh");
-                            message.setText("Ứng viên mới");
-                            new SendMail().execute(message);
-                            UploadFile(data.getData());
-                        } catch (MessagingException e) {
-                            e.printStackTrace();
-                        }
+                        UploadFile(data.getData());
+                        createNotification();
                     }
                 });
             } else
@@ -146,18 +128,40 @@ public class UploadActivity extends AppCompatActivity {
         }
     }
 
-    private class SendMail extends AsyncTask<Message, String, String> {
-        @Override
-        protected String doInBackground(Message... messages) {
-            try {
-                Transport.send(messages[0]);
-                return "Send Email Success";
-            }
-            catch (MessagingException e){
-                e.printStackTrace();
-                return "Error";
+    private void createNotification(){
+        String id = "my_channel_id_01";
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            NotificationChannel channel = manager.getNotificationChannel(id);
+            if(channel==null){
+                channel = new NotificationChannel(id,"Chanel Title",NotificationManager.IMPORTANCE_HIGH);
+                channel.setDescription("[Channel descriptioin]");
+                channel.enableVibration(true);
+                channel.setVibrationPattern(new long[]{100,1000,200,340});
+                channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+                manager.createNotificationChannel(channel);
+
             }
         }
+        Intent notificationIntent = new Intent(this,NotificationActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(this,1,notificationIntent,PendingIntent.FLAG_IMMUTABLE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,id)
+                .setSmallIcon(R.drawable.logo_intern)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.imgsuccess))
+                .setStyle(new NotificationCompat.BigPictureStyle()
+                        .bigPicture(BitmapFactory.decodeResource(getResources(),R.drawable.imgsuccess))
+                        .bigLargeIcon(null))
+                .setContentTitle("ISC | Intern Connect")
+                .setContentText("Bạn đã nộp đơn thành công!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVibrate(new long[]{100,1000,200,340})
+                .setAutoCancel(false)
+                .setTicker("Notification");
+        builder.setContentIntent(contentIntent);
+        NotificationManagerCompat m = NotificationManagerCompat.from(getApplicationContext());
+        m.notify(1,builder.build());
     }
 
     private void openApplyPopup(int gravity) {
@@ -166,7 +170,7 @@ public class UploadActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.layout_popup_apply);
 
         Window window = dialog.getWindow();
-        if(window == null){
+        if (window == null) {
             return;
         }
 
@@ -196,7 +200,7 @@ public class UploadActivity extends AppCompatActivity {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         openApplyPopup(Gravity.CENTER);
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isComplete());
+                        while (!uriTask.isComplete()) ;
                         Uri url = uriTask.getResult();
                         putPDF putPDF = new putPDF(txtPath.getText().toString(), url.toString());
                         databaseReference.child(databaseReference.push().getKey()).setValue(putPDF);

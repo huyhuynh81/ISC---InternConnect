@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Filter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.internship.Model.Account;
 import com.example.internship.Model.JobPost;
 import com.example.internship.Model.CompanyVH;
 import com.squareup.picasso.Picasso;
@@ -22,6 +24,7 @@ public class JobPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     Context context;
     ArrayList<JobPost> lsJobPost = new ArrayList<>();
     ArrayList<JobPost> lsJobPostFilter = new ArrayList<>();
+
 
     public void release(){context = null;}
 
@@ -58,6 +61,7 @@ public class JobPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailsPostAdActivity.class);
                 intent.putExtra("obj_cpn", cpn);
+                intent.putExtra("obj_acc", Account.class);
                 context.startActivity(intent);
             }
         });

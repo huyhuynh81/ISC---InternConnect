@@ -46,7 +46,7 @@ public class HomeAdminActivity extends AppCompatActivity {
         ref = db.getReference("JobPost");
         loadData();
         SearchData();
-        Account Username = (Account) getIntent().getSerializableExtra("acc");;
+        Account Username = (Account) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
         imgAdmin = (ImageButton) findViewById(R.id.imgAdmin);
         imgAdmin.setOnClickListener(new View.OnClickListener() {
