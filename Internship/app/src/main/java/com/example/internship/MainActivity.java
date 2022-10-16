@@ -23,11 +23,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnSignUp, btnDangNhap;
+    Button btnDangNhap;
     EditText edtPassword, edtPhone;
     ImageView imgShowPass;
     boolean isEnable;
-    TextView txtForgotPass;
+    TextView txtForgotPass, txtSignUp;
     Integer admin = 1;
     Integer student = 2;
 
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         edtPhone = findViewById(R.id.edtPhone);
         edtPassword = findViewById(R.id.edtPassword);
         btnDangNhap = findViewById(R.id.btnDangNhap);
-        btnSignUp = findViewById(R.id.btnSignUp);
+        txtSignUp = findViewById(R.id.txtSignUp);
 
         txtForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        txtSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);

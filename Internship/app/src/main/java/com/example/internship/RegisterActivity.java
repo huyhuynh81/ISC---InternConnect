@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.internship.Model.Account;
@@ -31,7 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     DatabaseReference ref;
     List<String> role;
-    Button btnDangKy, btnSignIn;
+    Button btnDangKy;
+    TextView txtSignIn;
     EditText edtName, edtPhone, edtEmail, edtPass, edtRe_Password;
     ImageView imgShowPass, imgShowPass1;
     RadioButton rdoAdmin, rdoStudent;
@@ -52,8 +54,8 @@ public class RegisterActivity extends AppCompatActivity {
         rdoStudent = findViewById(R.id.rdoStudent);
         role = new ArrayList<>();
         btnDangKy = findViewById(R.id.btnDangKy);
-        btnSignIn = findViewById(R.id.btnSignIn);
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
+        txtSignIn = findViewById(R.id.txtSignIn);
+        txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);

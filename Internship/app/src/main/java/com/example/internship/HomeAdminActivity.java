@@ -29,13 +29,15 @@ public class HomeAdminActivity extends AppCompatActivity {
     ArrayList<JobPost> cpns;
     FirebaseDatabase db;
     DatabaseReference ref;
-    ImageButton imgAdmin;
+    ImageButton imgAdmin,imgAddPost;
     TextView txtUsername;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_admin);
+        imgAddPost = findViewById(R.id.imgAddPost);
         txtUsername = (TextView) findViewById(R.id.txtUsername);
         searchView = findViewById(R.id.sr_Job);
         recycler_menu = findViewById(R.id.recyclere_menu);
@@ -54,6 +56,13 @@ public class HomeAdminActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeAdminActivity.this, AdminDetailsActivity.class);
                 intent.putExtra("acc",Username);
+                startActivity(intent);
+            }
+        });
+        imgAddPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeAdminActivity.this, AddPostActivity.class);
                 startActivity(intent);
             }
         });

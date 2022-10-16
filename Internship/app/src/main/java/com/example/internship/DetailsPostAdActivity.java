@@ -229,9 +229,7 @@ public class DetailsPostAdActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(DetailsPostAdActivity.this, "Delete Successfully", Toast.LENGTH_SHORT).show();
-//                                Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
-//                                intent.putExtra("obj_acc", Account.class);
-//                                startActivity(intent);
+                                finish();
                             }
                         });
                     }
