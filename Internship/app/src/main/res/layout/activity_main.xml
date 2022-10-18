@@ -56,7 +56,7 @@
                     android:layout_toRightOf="@+id/username_icon"
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Phone number"
+                    android:hint="Số điện thoại"
                     android:inputType="phone"
                     android:maxLines="1"
                     android:paddingLeft="15dp"
@@ -92,7 +92,7 @@
                     android:layout_toRightOf="@+id/icon"
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Password"
+                    android:hint="Mật khẩu"
                     android:inputType="textPassword"
                     android:maxHeight="10dp"
                     android:maxLines="1"
@@ -124,7 +124,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
-                android:text="Login"
+                android:text="Đăng nhập"
                 android:textColor="#ffffff"
                 android:textSize="17dp" />
 
@@ -135,7 +135,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="FORGOT PASSWORD ?"
+                android:text="QUÊN MẬT KHẨU ?"
                 android:textColor="#1566e0"
                 android:textSize="10.5sp" />
 
@@ -170,7 +170,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="12dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Register"
+                    android:text="Đăng ký tài khoản"
                     android:textColor="#1566e0"
                     android:textSize="12sp" />
             </LinearLayout>

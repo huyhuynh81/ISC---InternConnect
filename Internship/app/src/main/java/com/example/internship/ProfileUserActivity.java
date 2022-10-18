@@ -51,7 +51,6 @@ public class ProfileUserActivity extends AppCompatActivity {
         btnUpdateProfile = findViewById(R.id.btnUpdateProfile);
         spnMajor = findViewById(R.id.spnMajor);
         Account Username = (Account) getIntent().getSerializableExtra("acc");
-        ;
         edtNameUser.setText(Username.getName());
         edtEmail.setText(Username.getEmail());
         name = new ArrayList<>();
@@ -81,26 +80,20 @@ public class ProfileUserActivity extends AppCompatActivity {
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(isValidEmail(edtEmail.getText().toString())){
-                            if(snapshot.child(edtCode.getText().toString().trim()).exists()){
-                                Toast.makeText(ProfileUserActivity.this, "Update Failed...", Toast.LENGTH_SHORT).show();
+                        if (isValidEmail(edtEmail.getText().toString())) {
+                            if (male.isChecked()) {
+                                Student student = new Student(edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nam", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString());
+                                databaseReference.child(edtCode.getText().toString()).setValue(student);
+                                Toast.makeText(ProfileUserActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
-                            else {
-                                if(male.isChecked()){
-                                    Student student = new Student(edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nam", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString());
-                                    databaseReference.child(edtCode.getText().toString()).setValue(student);
-                                    Toast.makeText(ProfileUserActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                                if(female.isChecked()) {
-                                    Student student = new Student(edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nữ", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString());
-                                    databaseReference.child(edtCode.getText().toString()).setValue(student);
-                                    Toast.makeText(ProfileUserActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
+                            if (female.isChecked()) {
+                                Student student = new Student(edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nữ", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString());
+                                databaseReference.child(edtCode.getText().toString()).setValue(student);
+                                Toast.makeText(ProfileUserActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
-                        }
-                        else{
+                        } else {
                             Toast.makeText(ProfileUserActivity.this, "Wrong email", Toast.LENGTH_SHORT).show();
                         }
                     }

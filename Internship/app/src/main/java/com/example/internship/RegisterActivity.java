@@ -24,9 +24,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -42,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         edtEmail = findViewById(R.id.edtEmail);
         edtName = findViewById(R.id.edtName);
         edtPass = findViewById(R.id.edtPassword);
@@ -102,24 +106,31 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onClickRegister(){
+        String password = edtPass.getText().toString().trim();
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference ref = db.getReference("Account");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+                // BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
+
+
                 if(isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())){
                     if(snapshot.child(edtPhone.getText().toString().trim()).exists()){
                         Toast.makeText(RegisterActivity.this, "Number Already...", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         if(rdoAdmin.isChecked()){
-                            Account account = new Account(edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 1);
+                            Account account = new Account(edtEmail.getText().toString(),bcryptHashString, edtName.getText().toString(), 1);
+
                             ref.child(edtPhone.getText().toString()).setValue(account);
                             Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                         else if(rdoStudent.isChecked()){
-                            Account account = new Account(edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 2);
+                            Account account = new Account(edtEmail.getText().toString(),bcryptHashString, edtName.getText().toString(), 2);
                             ref.child(edtPhone.getText().toString()).setValue(account);
                             Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
                             finish();
@@ -156,5 +167,30 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean isValidPassword(String pass){
         return Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$").matcher(pass).matches();
+    }
+
+    public static String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

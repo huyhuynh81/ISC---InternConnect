@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 public class MainActivity extends AppCompatActivity {
     Button btnDangNhap;
     EditText edtPassword, edtPhone;
@@ -84,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickSignIn() {
+        String password = edtPassword.getText().toString().trim();
+
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference ref = db.getReference("Account");
         ref.addValueEventListener(new ValueEventListener() {
@@ -91,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(edtPhone.getText().toString()).exists()) {
                     Account acc = snapshot.child(edtPhone.getText().toString()).getValue(Account.class);
-                    if (acc.getPass().equals(edtPassword.getText().toString())) {
+                    String pass = acc.getPass();
+                    BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(),pass);
+                    if(result.verified == true){
                         if(acc.getRole() == student){
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             intent.putExtra("acc",acc);
@@ -102,9 +108,11 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("acc",acc);
                             startActivity(intent);
                         }
-                    } else {
+                    }
+                    else {
                         Toast.makeText(MainActivity.this, "Sign In failed", Toast.LENGTH_SHORT).show();
                     }
+
                 } else {
                     Toast.makeText(MainActivity.this, "User not exist...", Toast.LENGTH_SHORT).show();
                 }
