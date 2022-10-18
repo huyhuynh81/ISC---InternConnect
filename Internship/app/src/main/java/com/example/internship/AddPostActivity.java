@@ -42,6 +42,7 @@ public class AddPostActivity extends AppCompatActivity {
     Button btnAdd, btnBack;
     DatabaseReference databaseReference;
     StorageReference storageReference;
+    TextView txtLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +60,16 @@ public class AddPostActivity extends AppCompatActivity {
         addBenifit_Details = findViewById(R.id.addBenifit_Details);
         addNumber_Details = findViewById(R.id.addNumber_Details);
         addimgLogo_Details = findViewById(R.id.addimgLogo_Details);
+        txtLogo = findViewById(R.id.txtLogo);
         btnAdd = findViewById(R.id.btnAdd);
+        btnBack = findViewById(R.id.btnBack);
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         addimgLogo_Details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,12 +82,14 @@ public class AddPostActivity extends AppCompatActivity {
         });
 
     }
+
     private void selectImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture..."), 1);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -90,6 +101,7 @@ public class AddPostActivity extends AppCompatActivity {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                     Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 60, 60, true);
                     addimgLogo_Details.setImageBitmap(bitmap1);
+                    txtLogo.setVisibility(View.GONE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -134,7 +146,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 addPosition_Details.getText().toString(),
                                 addRequired_Details.getText().toString(),
                                 addSalary_Details.getText().toString()
-                                );
+                        );
                         databaseReference.child(addName_Details.getText().toString()).setValue(jb);
                     }
                 });

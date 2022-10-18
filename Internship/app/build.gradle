@@ -45,4 +45,9 @@ dependencies {
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
 
+    implementation "androidx.recommendation:recommendation:1.0.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.sa90.materialarcmenu:library:2.0.0'
+
 }
