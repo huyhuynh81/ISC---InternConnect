@@ -112,10 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-                // BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
-
 
                 if(isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())){
                     if(snapshot.child(edtPhone.getText().toString().trim()).exists()){

@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 public class ForgotPassActivity extends AppCompatActivity {
 
     ImageView imgShowPassNew, imgShowPassNew1;
@@ -40,7 +42,8 @@ public class ForgotPassActivity extends AppCompatActivity {
         btnChangePass = findViewById(R.id.btnChangePass);
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference ref = db.getReference("Account");
-
+        String password = edtNewpass.getText().toString().trim();
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
         imgShowPassNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +83,7 @@ public class ForgotPassActivity extends AppCompatActivity {
                         if(snapshot.child(edtPhoneLogin.getText().toString()).exists()){
                             Account acc = snapshot.child(edtPhoneLogin.getText().toString()).getValue(Account.class);
                             if(edtRenew_Pass.getText().toString().equals(edtNewpass.getText().toString())){
-                                ref.child(edtPhoneLogin.getText().toString()).child("pass").setValue(edtNewpass.getText().toString().trim());
+                                ref.child(edtPhoneLogin.getText().toString()).child("pass").setValue(bcryptHashString);
                                 Toast.makeText(ForgotPassActivity.this, "Change Successful", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(ForgotPassActivity.this, MainActivity.class);
                                 startActivity(intent);                                }

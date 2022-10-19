@@ -2,6 +2,7 @@ package com.example.internship;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.internship.Model.Account;
 import com.example.internship.Model.JobPost;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +31,8 @@ public class HomeAdminActivity extends AppCompatActivity {
     ArrayList<JobPost> cpns;
     FirebaseDatabase db;
     DatabaseReference ref;
-    ImageButton imgAdmin,imgAddPost;
+    ImageButton imgAdmin;
+    FloatingActionButton imgAddPost;
     TextView txtUsername;
 
 
@@ -46,6 +49,7 @@ public class HomeAdminActivity extends AppCompatActivity {
         recycler_menu.setLayoutManager(manager);
         db = FirebaseDatabase.getInstance();
         ref = db.getReference("JobPost");
+
         loadData();
         SearchData();
         Account Username = (Account) getIntent().getSerializableExtra("acc");
@@ -57,6 +61,18 @@ public class HomeAdminActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeAdminActivity.this, AdminDetailsActivity.class);
                 intent.putExtra("acc",Username);
                 startActivity(intent);
+            }
+        });
+        recycler_menu.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if(dy >0){
+                    imgAddPost.hide();
+                }
+                else
+                    imgAddPost.show();
+                super.onScrolled(recyclerView, dx, dy);
+
             }
         });
         imgAddPost.setOnClickListener(new View.OnClickListener() {
