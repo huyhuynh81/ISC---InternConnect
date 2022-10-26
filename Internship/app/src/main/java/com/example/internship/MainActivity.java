@@ -15,6 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.internship.Model.Account;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,12 +30,13 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class MainActivity extends AppCompatActivity {
     Button btnDangNhap;
-    EditText edtPassword, edtPhone;
+    EditText edtPassword, edtEmail;
     ImageView imgShowPass;
     boolean isEnable;
     TextView txtForgotPass, txtSignUp;
     Integer admin = 1;
     Integer student = 2;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         imgShowPass = findViewById(R.id.imgShowPass);
         txtForgotPass = findViewById(R.id.txtForgotPass);
-        edtPhone = findViewById(R.id.edtPhone);
+        edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         btnDangNhap = findViewById(R.id.btnDangNhap);
         txtSignUp = findViewById(R.id.txtSignUp);
@@ -86,42 +91,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickSignIn() {
-        String password = edtPassword.getText().toString().trim();
-
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference ref = db.getReference("Account");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(edtPhone.getText().toString()).exists()) {
-                    Account acc = snapshot.child(edtPhone.getText().toString()).getValue(Account.class);
-                    String pass = acc.getPass();
-                    BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(),pass);
-                    if(result.verified == true){
-                        if(acc.getRole() == student){
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            intent.putExtra("acc",acc);
-                            startActivity(intent);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.signInWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            ref.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Account acc = snapshot.child(firebaseAuth.getCurrentUser().getUid()).getValue(Account.class);
+                                    if (acc.getRole() == student) {
+                                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                        intent.putExtra("acc", acc);
+                                        startActivity(intent);
+                                    } else if (acc.getRole() == admin) {
+                                        Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
+                                        intent.putExtra("acc", acc);
+                                        startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
-                        else if(acc.getRole() == admin){
-                            Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
-                            intent.putExtra("acc",acc);
-                            startActivity(intent);
+                        else {
+                            Toast.makeText(MainActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    else {
-                        Toast.makeText(MainActivity.this, "Sign In failed", Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-                    Toast.makeText(MainActivity.this, "User not exist...", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+                });
     }
 }
+

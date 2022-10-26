@@ -3,18 +3,24 @@ package com.example.internship.Model;
 import java.io.Serializable;
 
 public class Account implements Serializable {
+    private String Phone;
     private String Email;
-    private  String Pass;
+    private String Pass;
     private String Name;
     private Integer Role;
 
-    public Account(){}
+    public Account() {}
 
-    public Account(String email, String pass, String name, Integer role) {
+    public Account(String phone, String email, String pass, String name, Integer role) {
+        Phone = phone;
         Email = email;
         Pass = pass;
         Name = name;
         Role = role;
+    }
+
+    public String getPhone() {
+        return Phone;
     }
 
     public String getEmail() {
@@ -31,6 +37,10 @@ public class Account implements Serializable {
 
     public Integer getRole() {
         return Role;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
     }
 
     public void setEmail(String email) {
