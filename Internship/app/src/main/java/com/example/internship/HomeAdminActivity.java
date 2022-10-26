@@ -6,8 +6,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SearchView;
@@ -25,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class HomeAdminActivity extends AppCompatActivity {
-    SearchView searchView;
+    androidx.appcompat.widget.SearchView searchView;
     RecyclerView recycler_menu;
     JobPostAdapter adapter;
     ArrayList<JobPost> cpns;
@@ -51,7 +55,6 @@ public class HomeAdminActivity extends AppCompatActivity {
         ref = db.getReference("JobPost");
 
         loadData();
-        SearchData();
         Account Username = (Account) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
         imgAdmin = (ImageButton) findViewById(R.id.imgAdmin);
@@ -105,9 +108,14 @@ public class HomeAdminActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void SearchData(){
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (androidx.appcompat.widget.SearchView) menu.findItem(R.id.sr_Job).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 return false;
@@ -121,5 +129,23 @@ public class HomeAdminActivity extends AppCompatActivity {
                 return false;
             }
         });
+        return true;
     }
+
+//    public void SearchData(){
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                if(adapter != null){
+//                    adapter.getFilter().filter(s);
+//                }
+//                return false;
+//            }
+//        });
+//    }
 }

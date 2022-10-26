@@ -52,17 +52,6 @@
                     android:textSize="17dp" />
 
             </LinearLayout>
-
-            <SearchView
-                android:id="@+id/sr_Job"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/user_layout"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="30dp"
-                android:iconifiedByDefault="false"
-                android:queryHint="Search Here" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -70,8 +59,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="70dp"
             android:orientation="vertical">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclere_menu"
                 android:layout_width="match_parent"
@@ -86,9 +76,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:layout_margin="15dp"
                 android:background="@drawable/border_add"
                 android:backgroundTint="@color/colorAccent"
-                android:layout_margin="15dp"
                 android:src="@drawable/ic_baseline_add_24" />
 
         </RelativeLayout>

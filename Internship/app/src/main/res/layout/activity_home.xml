@@ -12,54 +12,37 @@
         android:orientation="vertical"
         android:layout_weight="3">
         <LinearLayout
-            android:layout_width="match_parent"
             android:id="@+id/user_layout"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-            <ImageButton
-                android:id="@+id/imgUser"
-                android:background="@drawable/user"
-                android:layout_width="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_height="40dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="17dp"
-                android:fontFamily="@font/arial"
-                android:layout_marginLeft="15dp"
-                android:layout_height="wrap_content"
-                android:text="Xin chào," />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="17dp"
-                android:fontFamily="@font/arial"
-                android:layout_height="wrap_content"
-                android:hint="Tên người dùng"
-                android:id="@+id/txtUsername"/>
-
-            <ImageButton
-                android:id="@+id/imgMessage"
-                android:background="@drawable/messages"
-                android:layout_marginLeft="100dp"
-                android:layout_width="40dp"
-                android:layout_gravity="right|center"
-                android:layout_height="40dp"/>
-
-        </LinearLayout>
-        <SearchView
-            android:id="@+id/sr_Job"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="10dp"
-            android:queryHint="Search Here"
-            android:layout_below="@+id/user_layout"
-            android:iconifiedByDefault="false"/>
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/imgUser"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/user" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/arial"
+                android:text="Xin chào,"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/txtUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/arial"
+                android:hint="Tên người dùng"
+                android:textSize="17dp" />
+
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -67,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="vertical"
-        android:layout_marginTop="110dp">
+        android:layout_marginTop="60dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclere_menu"

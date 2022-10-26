@@ -1,19 +1,30 @@
 package com.example.internship;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Filter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.example.internship.Model.Account;
 import com.example.internship.Model.JobPost;
 import com.example.internship.Model.CompanyVH;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,8 +35,9 @@ public class JobPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     Context context;
     ArrayList<JobPost> lsJobPost = new ArrayList<>();
     ArrayList<JobPost> lsJobPostFilter = new ArrayList<>();
-
-
+    ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+    ProgressDialog progressDialog;
+    Dialog dialog;
     public void release(){context = null;}
 
     public JobPostAdapter(Context ctx, ArrayList<JobPost> lsJobPost)
@@ -51,11 +63,46 @@ public class JobPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         CompanyVH vh = (CompanyVH) holder;
         JobPost cpn = lsJobPost.get(position);
+        if(cpn == null){
+            return;
+        }
+
+        viewBinderHelper.bind(((CompanyVH) holder).SwipeRevealLayout,cpn.getName());
+        ((CompanyVH) holder).txtName_Company.setText(cpn.getName());
         vh.txtName_Company.setText(cpn.getName());
         vh.txtPosition.setText(cpn.getPosition());
         vh.txtNumber.setText(cpn.getNumber());
         String image = cpn.getLogo();
         Picasso.with(context).load(image).into(vh.imgLogo);
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference reference = db.getReference("JobPost");
+        ((CompanyVH) holder).imgxoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lsJobPost.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        reference.child( ((CompanyVH) holder).txtName_Company.getText().toString().trim()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(context, "Delete Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+        });
+
+
         vh.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

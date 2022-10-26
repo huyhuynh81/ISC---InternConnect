@@ -26,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 
 public class MainActivity extends AppCompatActivity {
     Button btnDangNhap;
@@ -98,30 +97,35 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            ref.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    Account acc = snapshot.child(firebaseAuth.getCurrentUser().getUid()).getValue(Account.class);
-                                    if (acc.getRole() == student) {
-                                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                        intent.putExtra("acc", acc);
-                                        startActivity(intent);
-                                    } else if (acc.getRole() == admin) {
-                                        Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
-                                        intent.putExtra("acc", acc);
-                                        startActivity(intent);
+                        if(firebaseAuth.getCurrentUser().isEmailVerified()){
+                            if (task.isSuccessful()) {
+                                ref.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        Account acc = snapshot.child(firebaseAuth.getCurrentUser().getUid()).getValue(Account.class);
+                                        if (acc.getRole() == student) {
+                                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                            intent.putExtra("acc", acc);
+                                            startActivity(intent);
+                                        } else if (acc.getRole() == admin) {
+                                            Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
+                                            intent.putExtra("acc", acc);
+                                            startActivity(intent);
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
-                                }
-                            });
+                                    }
+                                });
+                            }
+                            else {
+                                Toast.makeText(MainActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else {
-                            Toast.makeText(MainActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Tài khoản chưa xác thực", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

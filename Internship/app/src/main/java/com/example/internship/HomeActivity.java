@@ -2,15 +2,19 @@ package com.example.internship;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.internship.Model.Account;
@@ -25,7 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
-
     SearchView searchView;
     RecyclerView recycler_menu;
     CompanyAdapter adapter;
@@ -40,7 +43,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         txtUsername = (TextView) findViewById(R.id.txtUsername);
-        searchView = findViewById(R.id.sr_Job);
         recycler_menu = findViewById(R.id.recyclere_menu);
         recycler_menu.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -48,7 +50,6 @@ public class HomeActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         ref = db.getReference("JobPost");
         loadData();
-        SearchData();
         Account Username = (Account) getIntent().getSerializableExtra("acc");;
         txtUsername.setText(Username.getName());
         imgUser = (ImageButton) findViewById(R.id.imgUser);
@@ -60,31 +61,37 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     public void loadData(){
         db = FirebaseDatabase.getInstance();
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    cpns = new ArrayList<>();
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        JobPost cpn = data.getValue(JobPost.class);
-                        cpns.add(cpn);
-                    }
-                    adapter = new CompanyAdapter(HomeActivity.this, cpns);
-                    recycler_menu.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                cpns = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    JobPost cpn = data.getValue(JobPost.class);
+                    cpns.add(cpn);
                 }
+                adapter = new CompanyAdapter(HomeActivity.this, cpns);
+                recycler_menu.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            }
+        });
     }
 
-    public void SearchData(){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.sr_Job).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -99,6 +106,24 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+        return true;
     }
+
+//    public void SearchData(){
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                if(adapter != null){
+//                    adapter.getFilter().filter(s);
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
 }
