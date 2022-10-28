@@ -255,7 +255,7 @@
                 android:layout_margin="10dp">
 
                 <Button
-                    android:id="@+id/btnUpdatePost"
+                    android:id="@+id/btnQuaylai"
                     style="@style/loginButton"
                     android:background="@drawable/border_button"
                     android:textColor="@color/colorAccent"
@@ -263,16 +263,16 @@
                     android:layout_height="38dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="20dp"
-                    android:text="Cập nhật bài đăng" />
+                    android:text="Quay lại" />
 
                 <Button
-                    android:id="@+id/btnXoaPost"
+                    android:id="@+id/btnUpdatePost"
                     style="@style/loginButton"
                     android:layout_width="150dp"
                     android:layout_height="38dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    android:text="Xóa bài đăng" />
+                    android:text="Cập nhật bài đăng" />
 
             </LinearLayout>
         </LinearLayout>

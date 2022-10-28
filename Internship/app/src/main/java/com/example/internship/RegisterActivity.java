@@ -113,59 +113,76 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onClickRegister() {
-        final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        final DatabaseReference ref = db.getReference("Account");
-        String email = edtEmail.getText().toString();
-        String pass = edtPass.getText().toString();
-        firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this, "Đã gửi email xác thực", Toast.LENGTH_SHORT).show();
+        if(edtName.getText().toString().isEmpty()){
+            Toast.makeText(this, "Bạn chưa nhập tên người dùng", Toast.LENGTH_SHORT).show();
+        }
+        else if(edtPhone.getText().toString().isEmpty()){
+            Toast.makeText(this, "Bạn chưa nhập số điện thoại", Toast.LENGTH_SHORT).show();
+        }
+        else if(edtEmail.getText().toString().isEmpty()){
+            Toast.makeText(this, "Bạn chưa nhập Email", Toast.LENGTH_SHORT).show();
+        }
+        else if(edtPass.getText().toString().isEmpty()){
+            Toast.makeText(this, "Bạn chưa nhập mật khẩu", Toast.LENGTH_SHORT).show();
+        }
+        else if(edtRe_Password.getText().toString().isEmpty()){
+            Toast.makeText(this, "Bạn chưa nhập lại mật khẩu", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            final FirebaseDatabase db = FirebaseDatabase.getInstance();
+            final DatabaseReference ref = db.getReference("Account");
+            String email = edtEmail.getText().toString();
+            String pass = edtPass.getText().toString();
+            firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(RegisterActivity.this, "Đã gửi email xác thực", Toast.LENGTH_SHORT).show();
 
-                                if (isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())) {
-                                    if (rdoAdmin.isChecked()) {
-                                        Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 1);
-                                        ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                                        startActivity(intent);
-                                                    }
-                                                });
-                                    } else if (rdoStudent.isChecked()) {
-                                        Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 2);
-                                        ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                                        startActivity(intent);
-                                                    }
-                                                });
+                                    if (isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())) {
+                                        if (rdoAdmin.isChecked()) {
+                                            Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 1);
+                                            ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                        } else if (rdoStudent.isChecked()) {
+                                            Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 2);
+                                            ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                        }
                                     }
+                                } else {
+                                    Toast.makeText(RegisterActivity.this, "Xác thực không thành công", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "Xác thực không thành công", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    });
+                        });
 
+                    }
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 
@@ -182,59 +199,5 @@ public class RegisterActivity extends AppCompatActivity {
         return Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$").matcher(pass).matches();
     }
 }
-//    String password = edtPass.getText().toString().trim();
-//    final FirebaseDatabase db = FirebaseDatabase.getInstance();
-//    final DatabaseReference ref = db.getReference("Account");
-//        ref.addValueEventListener(new ValueEventListener() {
-//@Override
-//public void onDataChange(@NonNull DataSnapshot snapshot) {
-//        String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-//
-//        if(isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())){
-//        if(snapshot.child(edtPhone.getText().toString().trim()).exists()){
-//        Toast.makeText(RegisterActivity.this, "Number Already...", Toast.LENGTH_SHORT).show();
-//        }
-//        else {
-//        if(rdoAdmin.isChecked()){
-//        Account account = new Account(edtEmail.getText().toString(),bcryptHashString, edtName.getText().toString(), 1);
-//        ref.child(edtPhone.getText().toString()).setValue(account);
-//        Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
-//        finish();
-//        }
-//        else if(rdoStudent.isChecked()){
-//        Account account = new Account(edtEmail.getText().toString(),bcryptHashString, edtName.getText().toString(), 2);
-//        ref.child(edtPhone.getText().toString()).setValue(account);
-//        Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
-//        finish();
-//        if(edtEmail.getText().toString() != "")
-//        {
-//        String email = edtEmail.getText().toString();
-//        String pass = edtPass.getText().toString();
-//        firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//@Override
-//public void onComplete(@NonNull Task<AuthResult> task) {
-//        Intent intent = new Intent(RegisterActivity.this, VerificationActivity.class);
-//        startActivity(intent);
-//        }
-//        }).addOnFailureListener(new OnFailureListener() {
-//@Override
-//public void onFailure(@NonNull Exception e) {
-//        Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
-//        });
-//        finish();
-//        }
-//        }
-//
-//        }
-//        }
-//        else{
-//        Toast.makeText(RegisterActivity.this, "Email, Password or Number is incorrect...", Toast.LENGTH_SHORT).show();
-//        }
-//        }
-//@Override
-//public void onCancelled(@NonNull DatabaseError error) {
-//
-//        }
-//        });
+
 

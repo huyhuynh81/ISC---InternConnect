@@ -37,7 +37,7 @@ public class DetailsPostAdActivity extends AppCompatActivity {
     ImageView imgLogo_Details;
     EditText edtPosition_Details, edtName_Details, edtLocation_Details, edtSalary_Details, edtGender_Details,
             edtRequired_Details, edtBenefit_Details, edtNumber_Details;
-    Button btnUpdatePost, btnDeletePost, btnCancel, btnXoaPost;
+    Button btnUpdatePost, btnQuaylai;
     ProgressDialog progressDialog;
     Dialog dialog;
 
@@ -67,9 +67,8 @@ public class DetailsPostAdActivity extends AppCompatActivity {
         edtNumber_Details.setText(cpn.getNumber());
         String image = cpn.getLogo();
         Picasso.with(this).load(image).into(imgLogo_Details);
-
+        btnQuaylai = (Button) findViewById(R.id.btnQuaylai);
         btnUpdatePost = (Button) findViewById(R.id.btnUpdatePost);
-        btnXoaPost = (Button) findViewById(R.id.btnXoaPost);
         edtPosition_Details.setEnabled(false);
         edtName_Details.setEnabled(false);
         edtLocation_Details.setEnabled(false);
@@ -78,6 +77,13 @@ public class DetailsPostAdActivity extends AppCompatActivity {
         edtGender_Details.setEnabled(false);
         edtRequired_Details.setEnabled(false);
         edtBenefit_Details.setEnabled(false);
+
+        btnQuaylai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         btnUpdatePost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,81 +174,75 @@ public class DetailsPostAdActivity extends AppCompatActivity {
                 });
             }
         });
-        btnXoaPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openApplyPopup(Gravity.CENTER);
-            }
-        });
     }
 
-    private void openApplyPopup(int gravity) {
-        dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.layout_popup_delete);
-
-        Window window = dialog.getWindow();
-        if (window == null) {
-            return;
-        }
-
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = gravity;
-        window.setAttributes(windowAttributes);
-        btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
-        btnDeletePost = (Button) dialog.findViewById(R.id.btnDeletePost);
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference reference = db.getReference("JobPost");
-        btnDeletePost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                progressDialog = new ProgressDialog(DetailsPostAdActivity.this);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.show();
-                progressDialog.setTitle("Connecting");
-
-                Runnable progressRunable = new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.cancel();
-                    }
-                };
-                Handler pdCanceller = new Handler();
-                pdCanceller.postDelayed(progressRunable,500);
-                progressDialog.setContentView(R.layout.progress_dialog);
-                progressDialog.getWindow().setBackgroundDrawableResource(
-                        android.R.color.transparent);
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        reference.child(edtName_Details.getText().toString().trim()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(DetailsPostAdActivity.this, "Delete Successfully", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-        });
-
-        dialog.show();
-    }
+//    private void openApplyPopup(int gravity) {
+//        dialog = new Dialog(this);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.layout_popup_delete);
+//
+//        Window window = dialog.getWindow();
+//        if (window == null) {
+//            return;
+//        }
+//
+//        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+//        windowAttributes.gravity = gravity;
+//        window.setAttributes(windowAttributes);
+//        btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+//        btnDeletePost = (Button) dialog.findViewById(R.id.btnDeletePost);
+//
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                dialog.dismiss();
+//            }
+//        });
+//        FirebaseDatabase db = FirebaseDatabase.getInstance();
+//        DatabaseReference reference = db.getReference("JobPost");
+//        btnDeletePost.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                progressDialog = new ProgressDialog(DetailsPostAdActivity.this);
+//                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//                progressDialog.show();
+//                progressDialog.setTitle("Connecting");
+//
+//                Runnable progressRunable = new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        progressDialog.cancel();
+//                    }
+//                };
+//                Handler pdCanceller = new Handler();
+//                pdCanceller.postDelayed(progressRunable,500);
+//                progressDialog.setContentView(R.layout.progress_dialog);
+//                progressDialog.getWindow().setBackgroundDrawableResource(
+//                        android.R.color.transparent);
+//                reference.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        reference.child(edtName_Details.getText().toString().trim()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void unused) {
+//                                Toast.makeText(DetailsPostAdActivity.this, "Delete Successfully", Toast.LENGTH_SHORT).show();
+//                                finish();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//            }
+//        });
+//
+//        dialog.show();
+//    }
 
 }

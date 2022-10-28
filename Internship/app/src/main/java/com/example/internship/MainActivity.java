@@ -90,18 +90,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickSignIn() {
-        final FirebaseDatabase db = FirebaseDatabase.getInstance();
-        final DatabaseReference ref = db.getReference("Account");
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.signInWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString())
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(firebaseAuth.getCurrentUser().isEmailVerified()){
-                            if (task.isSuccessful()) {
-                                ref.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+        if (edtEmail.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Bạn chưa nhập Email", Toast.LENGTH_SHORT).show();
+        } else if (edtPassword.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Bạn chưa nhập mật khẩu", Toast.LENGTH_SHORT).show();
+        } else {
+            final FirebaseDatabase db = FirebaseDatabase.getInstance();
+            final DatabaseReference ref = db.getReference("Account");
+            firebaseAuth = FirebaseAuth.getInstance();
+            firebaseAuth.signInWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                        if (task.isSuccessful()) {
+                            ref.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.child(firebaseAuth.getCurrentUser().getUid()).exists()){
                                         Account acc = snapshot.child(firebaseAuth.getCurrentUser().getUid()).getValue(Account.class);
                                         if (acc.getRole() == student) {
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
@@ -113,22 +118,25 @@ public class MainActivity extends AppCompatActivity {
                                             startActivity(intent);
                                         }
                                     }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
+                                    else {
+                                        Toast.makeText(MainActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
                                     }
-                                });
-                            }
-                            else {
-                                Toast.makeText(MainActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
-                            }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        } else {
+                            Toast.makeText(MainActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
                         }
-                        else {
-                            Toast.makeText(MainActivity.this, "Tài khoản chưa xác thực", Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, "Tài khoản chưa xác thực", Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
+            });
+        }
     }
 }
 

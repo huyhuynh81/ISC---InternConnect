@@ -13,6 +13,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.internship.Model.Account;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,29 +27,31 @@ import java.util.regex.Pattern;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
-    EditText edtNewpassword, edtRenew_password, edtCurrentPhone, edtCurrentPass;
+    EditText edtNewpassword, edtRenew_password, edtCurrentEmail, edtCurrentPass;
     Button btnUpdatePasswod;
     ImageView imgShowPassCurrent, imgShowPassNew, imgShowPassNew1;
     boolean isEnable;
-    DatabaseReference db;
-
+    FirebaseUser firebaseUser;
+    FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
-
         imgShowPassCurrent = findViewById(R.id.imgShowCurrentPass);
         imgShowPassNew = findViewById(R.id.imgShowPassNew);
         imgShowPassNew1 = findViewById(R.id.imgShowPassNew1);
         edtNewpassword = findViewById(R.id.edtNewpassword);
         edtRenew_password = findViewById(R.id.edtRenew_Password);
         edtCurrentPass = findViewById(R.id.edtCurrentPass);
-        edtCurrentPhone = findViewById(R.id.edtCurrentPhone);
+        edtCurrentEmail = findViewById(R.id.edtCurrentEmail);
         btnUpdatePasswod = findViewById(R.id.btnUpdatePass);
+        Account Username = (Account) getIntent().getSerializableExtra("acc");
+        edtCurrentEmail.setText(Username.getEmail());
+        edtCurrentEmail.setEnabled(false);
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference ref = db.getReference("Account");
-
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         imgShowPassCurrent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,33 +100,43 @@ public class ChangePasswordActivity extends AppCompatActivity {
         btnUpdatePasswod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                    ref.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.child(edtCurrentPhone.getText().toString()).exists()){
-                                Account acc = snapshot.child(edtCurrentPhone.getText().toString()).getValue(Account.class);
-                                if(acc.getPass().equals(edtCurrentPass.getText().toString()) & edtRenew_password.getText().toString().equals(edtNewpassword.getText().toString())){
-                                    ref.child(edtCurrentPhone.getText().toString()).child("pass").setValue(edtNewpassword.getText().toString().trim());
-                                    Toast.makeText(ChangePasswordActivity.this, "Update Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(ChangePasswordActivity.this, MainActivity.class);
-                                    startActivity(intent);                                }
-                                else {
-                                    Toast.makeText(ChangePasswordActivity.this, "Wrong Password", Toast.LENGTH_SHORT).show();
-                                }
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.child(firebaseAuth.getCurrentUser().getUid()).exists()) {
+                            Account acc = snapshot.child(firebaseAuth.getCurrentUser().getUid()).getValue(Account.class);
+                            if (acc.getPass().equals(edtCurrentPass.getText().toString()) && edtRenew_password.getText().toString().equals(edtNewpassword.getText().toString()) && isValidPassword(edtNewpassword.getText().toString())) {
+                                firebaseUser.updatePassword(edtNewpassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            ref.child(firebaseAuth.getCurrentUser().getUid()).child("pass").setValue(edtNewpassword.getText().toString().trim());
+                                            Toast.makeText(ChangePasswordActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(ChangePasswordActivity.this, MainActivity.class);
+                                            startActivity(intent);
+                                        }
+                                        else {
+                                            Toast.makeText(ChangePasswordActivity.this, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
                             }
                             else {
-                                Toast.makeText(ChangePasswordActivity.this, "Update failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ChangePasswordActivity.this, "Mật khẩu không đúng", Toast.LENGTH_SHORT).show();
                             }
+                        } else {
+                            Toast.makeText(ChangePasswordActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
+                    }
                 });
             }
         });
+
     }
 
     private boolean isValidPassword(String pass) {

@@ -77,32 +77,43 @@ public class ProfileUserActivity extends AppCompatActivity {
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (isValidEmail(edtEmail.getText().toString())) {
-                            if (male.isChecked()) {
-                                Student student = new Student(edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nam", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString());
-                                databaseReference.child(edtCode.getText().toString()).setValue(student);
-                                Toast.makeText(ProfileUserActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
-                                finish();
+                if(edtCode.getText().toString().isEmpty()){
+                    Toast.makeText(ProfileUserActivity.this, "Bạn chưa nhập MSSV", Toast.LENGTH_SHORT).show();
+                }
+                else if(edtAcademicYear.getText().toString().isEmpty()){
+                    Toast.makeText(ProfileUserActivity.this, "Bạn chưa nhập niên khóa", Toast.LENGTH_SHORT).show();
+                }
+                else if(edtAddress.getText().toString().isEmpty()){
+                    Toast.makeText(ProfileUserActivity.this, "Bạn chưa nhập địa chỉ", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (isValidEmail(edtEmail.getText().toString())) {
+                                if (male.isChecked()) {
+                                    Student student = new Student(edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nam", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString());
+                                    databaseReference.child(edtCode.getText().toString()).setValue(student);
+                                    Toast.makeText(ProfileUserActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                                if (female.isChecked()) {
+                                    Student student = new Student(edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nữ", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString());
+                                    databaseReference.child(edtCode.getText().toString()).setValue(student);
+                                    Toast.makeText(ProfileUserActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            } else {
+                                Toast.makeText(ProfileUserActivity.this, "Wrong email", Toast.LENGTH_SHORT).show();
                             }
-                            if (female.isChecked()) {
-                                Student student = new Student(edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nữ", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString());
-                                databaseReference.child(edtCode.getText().toString()).setValue(student);
-                                Toast.makeText(ProfileUserActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        } else {
-                            Toast.makeText(ProfileUserActivity.this, "Wrong email", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
         });
     }

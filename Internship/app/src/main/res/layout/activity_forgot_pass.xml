@@ -58,17 +58,17 @@
                         android:layout_height="15dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="17dp"
-                        android:src="@drawable/phone_icon" />
+                        android:src="@drawable/email" />
 
                     <EditText
-                        android:id="@+id/edtPhoneLogin"
+                        android:id="@+id/edtEmailLogin"
                         android:layout_width="290dp"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/edtName_icon"
                         android:background="@android:color/transparent"
                         android:fontFamily="@font/poppins_regular"
-                        android:hint="Số điện thoại"
-                        android:inputType="number"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:paddingLeft="15dp"
                         android:paddingTop="15dp"
@@ -79,96 +79,72 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="290dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="62dp"
-                    android:layout_marginTop="12.7dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="62dp"
                     android:background="@drawable/blue_border_rounded_cornwe">
 
+                    <ImageView
+                        android:id="@+id/edtPassword_icon"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="17dp"
+                        android:src="@drawable/password" />
+
                     <EditText
-                        android:id="@+id/edtNewpass"
-                        android:layout_width="220dp"
+                        android:id="@+id/edtNewPassword"
+                        android:layout_width="290dp"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/icon_password2"
+                        android:layout_toRightOf="@+id/edtPassword_icon"
                         android:background="@android:color/transparent"
                         android:fontFamily="@font/poppins_regular"
                         android:hint="Mật khẩu mới"
                         android:inputType="textPassword"
-                        android:maxHeight="10dp"
                         android:maxLines="1"
-                        android:paddingLeft="17dp"
+                        android:paddingLeft="15dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:textCursorDrawable="@drawable/cursor_color"
-                        android:textSize="12sp" />
+                        android:textSize="12dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="62dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="62dp"
+                    android:background="@drawable/blue_border_rounded_cornwe">
 
                     <ImageView
-                        android:id="@+id/icon_password2"
-                        android:layout_width="14.7dp"
-                        android:layout_height="10.3dp"
+                        android:id="@+id/edtPassword_icon1"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="17dp"
                         android:src="@drawable/password" />
 
-                    <ImageView
-                        android:id="@+id/imgShowPassNew"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:layout_toRightOf="@+id/edtNewpass"
-                        android:background="@drawable/ic_baseline_visibility_off_24">
-
-                    </ImageView>
-
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="290dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="62dp"
-                    android:layout_marginTop="12.7dp"
-                    android:layout_marginRight="62dp"
-                    android:background="@drawable/blue_border_rounded_cornwe">
-
                     <EditText
-                        android:id="@+id/edtRenew_Pass"
-                        android:layout_width="220dp"
+                        android:id="@+id/edtRe_NewPassword"
+                        android:layout_width="290dp"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/icon_password"
+                        android:layout_toRightOf="@+id/edtPassword_icon1"
                         android:background="@android:color/transparent"
                         android:fontFamily="@font/poppins_regular"
                         android:hint="Nhập lại mật khẩu"
                         android:inputType="textPassword"
-                        android:maxHeight="10dp"
                         android:maxLines="1"
-                        android:paddingLeft="17dp"
+                        android:paddingLeft="15dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
                         android:textCursorDrawable="@drawable/cursor_color"
-                        android:textSize="12sp" />
-
-                    <ImageView
-                        android:id="@+id/icon_password"
-                        android:layout_width="14.7dp"
-                        android:layout_height="10.3dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="17dp"
-                        android:src="@drawable/password" />
-
-                    <ImageView
-                        android:id="@+id/imgShowPassNew1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center"
-                        android:layout_toRightOf="@+id/edtRenew_Pass"
-                        android:background="@drawable/ic_baseline_visibility_off_24">
-
-                    </ImageView>
+                        android:textSize="12dp" />
 
                 </RelativeLayout>
-
 
                 <Button
                     android:id="@+id/btnChangePass"
