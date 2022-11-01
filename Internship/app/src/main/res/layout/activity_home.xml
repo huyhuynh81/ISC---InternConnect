@@ -38,9 +38,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
                 android:fontFamily="@font/arial"
                 android:hint="Tên người dùng"
                 android:textSize="17dp" />
+
+            <ImageButton
+                android:id="@+id/imgCreateCV"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center"
+                android:layout_marginLeft="95dp"
+                android:background="@drawable/create_cv" />
 
         </LinearLayout>
     </RelativeLayout>

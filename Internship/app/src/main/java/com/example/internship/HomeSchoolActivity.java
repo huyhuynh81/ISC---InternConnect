@@ -10,16 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.internship.Model.Account;
-import com.example.internship.Model.JobPost;
+import com.example.internship.Model.AccountSchool;
+import com.example.internship.Model.School;
+import com.example.internship.Model.Student;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,68 +32,77 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeSchoolActivity extends AppCompatActivity {
     SearchView searchView;
     RecyclerView recycler_menu;
-    CompanyAdapter adapter;
-    ArrayList<JobPost> cpns;
+    SchoolAdapter adapter;
+    ArrayList<Student> stds;
     FirebaseDatabase db;
-    DatabaseReference ref;
-    ImageButton imgUser, imgCreateCV;
+    DatabaseReference ref, ref1;
+    ImageButton imgSchool;
     TextView txtUsername;
+    FirebaseUser user;
+    private String userID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_home_school);
         txtUsername = (TextView) findViewById(R.id.txtUsername);
         recycler_menu = findViewById(R.id.recyclere_menu);
         recycler_menu.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(manager);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
         db = FirebaseDatabase.getInstance();
-        ref = db.getReference("JobPost");
+        ref = db.getReference("Account");
         loadData();
-        Account Username = (Account) getIntent().getSerializableExtra("acc");;
+        Account Username = (Account) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
-        imgUser = (ImageButton) findViewById(R.id.imgUser);
-        imgCreateCV = (ImageButton) findViewById(R.id.imgCreateCV);
-
-        imgCreateCV.setOnClickListener(new View.OnClickListener() {
+        imgSchool = (ImageButton) findViewById(R.id.imgSchool);
+        imgSchool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = "https://www.cakeresume.com/cv-maker?ref=navs_cv_builder";
-                Intent intent= new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                startActivity(intent);
-            }
-        });
-
-        imgUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, UserDetailsActivity.class);
-                intent.putExtra("acc",Username);
+                Intent intent = new Intent(HomeSchoolActivity.this, UserDetailsActivity.class);
+                intent.putExtra("acc", Username);
                 startActivity(intent);
             }
         });
 
     }
 
-    public void loadData(){
+    public void loadData() {
         db = FirebaseDatabase.getInstance();
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                cpns = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    JobPost cpn = data.getValue(JobPost.class);
-                    cpns.add(cpn);
-                }
-                adapter = new CompanyAdapter(HomeActivity.this, cpns);
-                recycler_menu.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                ref1 = db.getReference("Student");
+                AccountSchool accountSchool = snapshot.child(userID).getValue(AccountSchool.class);
+                Student student = snapshot.child(userID).getValue(Student.class);
+                    ref1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            stds = new ArrayList<>();
+                            for (DataSnapshot data : snapshot.getChildren()) {
+                                Student std = data.getValue(Student.class);
+                                if(std.getSchool().equals(accountSchool.getSchool())){
+                                    stds.add(std);
+                                }
+                            }
+                            adapter = new SchoolAdapter(HomeSchoolActivity.this, stds);
+                            recycler_menu.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -100,7 +112,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.sr_Job).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -113,7 +125,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                if(adapter != null){
+                if (adapter != null) {
                     adapter.getFilter().filter(s);
                 }
                 return false;

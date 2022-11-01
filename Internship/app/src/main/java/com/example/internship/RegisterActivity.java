@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountSchool;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,12 +41,15 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    Spinner spnSchool1;
+    DatabaseReference databaseReference;
+    List<String> name2;
     List<String> role;
     Button btnDangKy;
     TextView txtSignIn;
     EditText edtName, edtPhone, edtEmail, edtPass, edtRe_Password;
     ImageView imgShowPass, imgShowPass1;
-    RadioButton rdoAdmin, rdoStudent;
+    RadioButton rdoAdmin, rdoStudent, rdoSchool;
     boolean isEnable;
     FirebaseAuth firebaseAuth;
 
@@ -62,10 +66,41 @@ public class RegisterActivity extends AppCompatActivity {
         imgShowPass1 = findViewById(R.id.imgShowPass1);
         rdoAdmin = findViewById(R.id.rdoAdmin);
         rdoStudent = findViewById(R.id.rdoStudent);
+        rdoSchool = findViewById(R.id.rdoSchool);
+        spnSchool1 = findViewById(R.id.spnSchool1);
+        spnSchool1.setEnabled(false);
         role = new ArrayList<>();
         btnDangKy = findViewById(R.id.btnDangKy);
         txtSignIn = findViewById(R.id.txtSignIn);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        rdoSchool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(rdoSchool.isChecked()){
+                    spnSchool1.setEnabled(true);
+                }
+            }
+        });
+
+        rdoStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(rdoStudent.isChecked()){
+                    spnSchool1.setEnabled(false);
+                }
+            }
+        });
+
+        rdoAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(rdoAdmin.isChecked()){
+                    spnSchool1.setEnabled(false);
+                }
+            }
+        });
+
         txtSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +143,28 @@ public class RegisterActivity extends AppCompatActivity {
                     imgShowPass.setSelected(isEnable);
                     edtRe_Password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
+            }
+        });
+
+        name2 = new ArrayList<>();
+        final FirebaseDatabase db = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = db.getReference();
+        databaseReference.child("School").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childsnapshot : snapshot.getChildren()) {
+                    String SchoolName = childsnapshot.child("name").getValue(String.class);
+                    name2.add(SchoolName);
+                }
+                ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_spinner_item, name2);
+                arrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                spnSchool1.setAdapter(arrayAdapter2);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -155,8 +212,21 @@ public class RegisterActivity extends AppCompatActivity {
                                                             startActivity(intent);
                                                         }
                                                     });
-                                        } else if (rdoStudent.isChecked()) {
+                                        }
+                                        else if (rdoStudent.isChecked()) {
                                             Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 2);
+                                            ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                        }
+                                        else if(rdoSchool.isChecked()){
+                                            AccountSchool account = new AccountSchool(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 3, spnSchool1.getSelectedItem().toString());
                                             ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override

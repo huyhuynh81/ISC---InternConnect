@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtForgotPass, txtSignUp;
     Integer admin = 1;
     Integer student = 2;
+    Integer school = 3;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -114,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
                                             startActivity(intent);
                                         } else if (acc.getRole() == admin) {
                                             Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
+                                            intent.putExtra("acc", acc);
+                                            startActivity(intent);
+                                        }
+                                        else if(acc.getRole() == school){
+                                            Intent intent = new Intent(getApplicationContext(), HomeSchoolActivity.class);
                                             intent.putExtra("acc", acc);
                                             startActivity(intent);
                                         }

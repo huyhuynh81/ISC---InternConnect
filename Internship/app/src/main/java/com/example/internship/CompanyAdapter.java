@@ -11,9 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.internship.Model.JobPost;
-import com.example.internship.Model.CompanyVH;
-import com.example.internship.Model.Student;
-import com.example.internship.Model.StudentVH;
+import com.example.internship.Model.JobPostVH;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,12 +41,12 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view =  LayoutInflater.from(context).inflate(R.layout.layout_item_jobpost, parent,false);
-        return new StudentVH(view);
+        return new JobPostVH(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        StudentVH vh = (StudentVH) holder;
+        JobPostVH vh = (JobPostVH) holder;
         JobPost cpn = lsJobPost.get(position);
         vh.txtName_Company.setText(cpn.getName());
         vh.txtPosition.setText(cpn.getPosition());

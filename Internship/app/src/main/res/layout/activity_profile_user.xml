@@ -18,7 +18,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -267,6 +268,39 @@
                         android:maxLines="1" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="62dp"
+                    android:layout_marginTop="12.7dp"
+                    android:layout_marginRight="62dp"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/spnSchool"
+                        style="@style/modifiedEditText"
+                        android:hint="Major"
+                        android:maxLines="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="62dp"
+                    android:layout_marginTop="12.7dp"
+                    android:layout_marginRight="62dp"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/chkVerify"
+                        style="@style/modifiedEditText"
+                        android:hint="Đã xác thực"
+                        android:enabled="false"
+                        android:maxLines="1" />
+                </LinearLayout>
+
 
                 <Button
                     android:id="@+id/btnUpdateProfile"
@@ -280,6 +314,7 @@
                     android:fontFamily="@font/poppins_medium"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
+                    android:layout_marginBottom="20dp"
                     android:text="Cập nhật"
                     android:textColor="#ffffff"
                     android:textSize="17dp" />
