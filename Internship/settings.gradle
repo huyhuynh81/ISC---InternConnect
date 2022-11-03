@@ -8,9 +8,11 @@ pluginManagement {
 dependencyResolutionManagement {
     repositories {
         jcenter()
+        maven { url 'https://jitpack.io' }
         google()
         mavenCentral()
     }
 }
+
 rootProject.name = "Internship"
 include ':app'

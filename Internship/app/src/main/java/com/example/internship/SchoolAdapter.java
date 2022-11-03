@@ -1,6 +1,7 @@
 package com.example.internship;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,14 +53,14 @@ public class SchoolAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         vh.txtMajor.setText(std.getMajor());
 //        String image = sch.getLogo();
 //        Picasso.with(context).load(image).into(vh.imgLogo);
-//        vh.cardview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, DetailsActivity.class);
-//                intent.putExtra("obj_cpn", cpn);
-//                context.startActivity(intent);
-//            }
-//        });
+        vh.cardV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SchoolDetailsActivity.class);
+                intent.putExtra("obj_cpn", std);
+                context.startActivity(intent);
+            }
+        });
     }
 
 //    private void onClicktoDetails(Company cpn) {

@@ -14,19 +14,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.internship.Model.Account;
 import com.example.internship.Model.JobPost;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.ArrayList;
+
+import maes.tech.intentanim.CustomIntent;
 
 public class HomeAdminActivity extends AppCompatActivity {
     androidx.appcompat.widget.SearchView searchView;
@@ -34,20 +41,24 @@ public class HomeAdminActivity extends AppCompatActivity {
     JobPostAdapter adapter;
     ArrayList<JobPost> cpns;
     FirebaseDatabase db;
+    BottomNavigationView bottomNavigationView;
     DatabaseReference ref;
     ImageButton imgAdmin;
     FloatingActionButton imgAddPost;
     TextView txtUsername;
+    ChipNavigationBar chipNavigationBar;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_admin);
-        imgAddPost = findViewById(R.id.imgAddPost);
         txtUsername = (TextView) findViewById(R.id.txtUsername);
         searchView = findViewById(R.id.sr_Job);
         recycler_menu = findViewById(R.id.recyclere_menu);
+        chipNavigationBar = findViewById(R.id.chipNavigationBar);
         recycler_menu.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(manager);
@@ -66,26 +77,31 @@ public class HomeAdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        recycler_menu.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        chipNavigationBar.setItemSelected(R.id.Home,true);
+        recycler_menu.setOnTouchListener(new TranslateAnimationUtil(HomeAdminActivity.this,chipNavigationBar));
+        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if(dy >0){
-                    imgAddPost.hide();
+            public void onItemSelected(int i) {
+                switch (i){
+                    case R.id.Home:
+                        break;
+                    case R.id.Addpost:
+                        Intent intent = new Intent(HomeAdminActivity.this, AddPostActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.History:
+                        Intent intent1 = new Intent(HomeAdminActivity.this, JobAppActivity.class);
+                        intent1.putExtra("acc",Username);
+                        startActivity(intent1);
+                        CustomIntent.customType(HomeAdminActivity.this,"fadein-to-fadeout");
+                        break;
                 }
-                else
-                    imgAddPost.show();
-                super.onScrolled(recyclerView, dx, dy);
 
             }
         });
-        imgAddPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeAdminActivity.this, AddPostActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
+
 
     public void loadData(){
         db = FirebaseDatabase.getInstance();

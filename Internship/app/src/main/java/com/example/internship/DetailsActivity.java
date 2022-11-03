@@ -48,7 +48,9 @@ public class DetailsActivity extends AppCompatActivity {
         btnUngTuyen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String name_com = txtName_Details.getText().toString();
                 Intent intent = new Intent(DetailsActivity.this, UploadActivity.class);
+                intent.putExtra("com_name",name_com);
                 startActivity(intent);
             }
         });

@@ -20,22 +20,25 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.example.internship.Model.Account;
+import com.example.internship.Model.Student;
 import com.example.internship.Model.putPDF;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,16 +48,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.Properties;
-
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Authenticator;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.Message;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -65,6 +62,12 @@ public class UploadActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     ActivityResultLauncher<Intent> resultLauncher;
     ViewFlipper simpleFlipper;
+    FirebaseUser user;
+    FirebaseAuth auth;
+    DatabaseReference reference;
+    DatabaseReference reference2;
+    private  String userID;
+    String major;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,13 @@ public class UploadActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("JobApp");
         simpleFlipper = (ViewFlipper) findViewById(R.id.simpleFlipper);
         simpleFlipper.setAutoStart(true);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Account");
+        userID = user.getUid();
+
+        reference2 = FirebaseDatabase.getInstance().getReference("Student");
+
+
 
         btnQuaylai.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,19 +202,45 @@ public class UploadActivity extends AppCompatActivity {
         dialog.show();
     }
 
+
+
     private void UploadFile(Uri data) {
-        storageReference = storageReference.child("Upload/" + System.currentTimeMillis() + ".pdf");
-        storageReference.putFile(data)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        String intent = getIntent().getStringExtra("com_name");
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                reference2.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        openApplyPopup(Gravity.CENTER);
-                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isComplete()) ;
-                        Uri url = uriTask.getResult();
-                        putPDF putPDF = new putPDF(txtPath.getText().toString(), url.toString());
-                        databaseReference.child(databaseReference.push().getKey()).setValue(putPDF);
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Student student = snapshot.getValue(Student.class);
+                        storageReference = storageReference.child("Upload/" + System.currentTimeMillis() + ".pdf");
+                        storageReference.putFile(data)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        openApplyPopup(Gravity.CENTER);
+                                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                        while (!uriTask.isComplete()) ;
+                                        Uri url = uriTask.getResult();
+                                        Date d = new Date();
+                                        CharSequence s  = DateFormat.format("dd/MM/yyyy", d.getTime());
+                                        putPDF putPDF = new putPDF(txtPath.getText().toString(), url.toString(), student.getName(), intent, student.getMajor(), student.getSchool(),s.toString());
+                                        databaseReference.child(Objects.requireNonNull(databaseReference.push().getKey())).setValue(putPDF);
+                                    }
+                                });
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/border"
+    android:orientation="vertical"
+    app:cardCornerRadius="20dp">
+
+
+    <LinearLayout
+        android:id="@+id/idLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/PDFimg"
+                android:layout_width="60dp"
+                android:layout_height="70dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@drawable/pdf_file_icon"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/txtCV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="2dp"
+                android:padding="3dp"
+                android:text="cacsacascsacs"
+                android:textSize="13dp"
+                android:visibility="gone">
+
+            </TextView>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="Tên Công ty"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtNameOfCompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="100sp"
+                    android:layout_height="match_parent"
+                    android:padding="1dp"
+                    android:text="Tên ứng viên"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="1dp"
+                    android:text=""
+                    android:textSize="15sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:text="Ten Ngành"
+                    android:textColor="@android:color/background_dark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtMajor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:text="Tên Trường"
+                    android:textColor="@android:color/background_dark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtName_School"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textColor="@android:color/background_dark"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtDateApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

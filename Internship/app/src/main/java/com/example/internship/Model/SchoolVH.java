@@ -25,5 +25,6 @@ public class SchoolVH extends RecyclerView.ViewHolder {
         txtEmail = itemView.findViewById(R.id.txtEmail);
         txtName = itemView.findViewById(R.id.txtName);
         txtMajor = itemView.findViewById(R.id.txtMajor);
+        cardV = itemView.findViewById(R.id.cardV);
     }
 }

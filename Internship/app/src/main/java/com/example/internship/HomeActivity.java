@@ -20,14 +20,18 @@ import android.widget.TextView;
 
 import com.example.internship.Model.Account;
 import com.example.internship.Model.JobPost;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 
 import java.util.ArrayList;
+
+import maes.tech.intentanim.CustomIntent;
 
 public class HomeActivity extends AppCompatActivity {
     SearchView searchView;
@@ -38,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     DatabaseReference ref;
     ImageButton imgUser, imgCreateCV;
     TextView txtUsername;
+    ChipNavigationBar chipNavigationBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,14 @@ public class HomeActivity extends AppCompatActivity {
         txtUsername.setText(Username.getName());
         imgUser = (ImageButton) findViewById(R.id.imgUser);
         imgCreateCV = (ImageButton) findViewById(R.id.imgCreateCV);
+        imgUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, UserDetailsActivity.class);
+                intent.putExtra("acc",Username);
+                startActivity(intent);
+            }
+        });
 
         imgCreateCV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,12 +79,29 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        imgUser.setOnClickListener(new View.OnClickListener() {
+        chipNavigationBar = findViewById(R.id.chipNavigationBar);
+        chipNavigationBar.setItemSelected(R.id.Home,true);
+        recycler_menu.setOnTouchListener(new TranslateAnimationUtil(HomeActivity.this,chipNavigationBar));
+        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, UserDetailsActivity.class);
-                intent.putExtra("acc",Username);
-                startActivity(intent);
+            public void onItemSelected(int i) {
+                switch (i){
+                    case R.id.Home:
+                        break;
+                    case R.id.Addpost:
+                        String url = "https://www.cakeresume.com/cv-maker?ref=navs_cv_builder";
+                        Intent intent= new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(url));
+                        startActivity(intent);
+                        break;
+                    case R.id.History:
+                        Intent intent1 = new Intent(HomeActivity.this, HistoryActivity.class);
+                        intent1.putExtra("acc",Username);
+                        startActivity(intent1);
+                        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+                        break;
+                }
+
             }
         });
 
@@ -140,3 +170,8 @@ public class HomeActivity extends AppCompatActivity {
 //    }
 
 }
+
+
+
+
+
