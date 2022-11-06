@@ -61,6 +61,15 @@ public class SchoolAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 context.startActivity(intent);
             }
         });
+        if(std.getVerify().equals("true")){
+            vh.imgcheck.setVisibility(View.GONE);
+            //vh.chbVerifyHome.setChecked(true);
+        }
+        else {
+            vh.imgUncheck.setVisibility(View.GONE);
+            //vh.chbVerifyHome.setChecked(false);
+        }
+
     }
 
 //    private void onClicktoDetails(Company cpn) {

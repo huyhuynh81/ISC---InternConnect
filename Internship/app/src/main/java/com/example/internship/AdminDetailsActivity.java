@@ -12,25 +12,30 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 
 public class AdminDetailsActivity extends AppCompatActivity {
 
     Dialog dialog;
     TextView txtUsername1;
-    Button btnLogout, btnInternConnect, btnChinhSach, btnHuy, btnDangXuat, btnDoiMatkhau, btnProfile;
+    RelativeLayout btnLogout, btnInternConnect, btnChinhSach, btnDoiMatkhau;
+    Button btnHuy, btnDangXuat;
+    ImageButton btnHomeBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_details);
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-        btnInternConnect = (Button) findViewById(R.id.btnInternConnect);
-        btnChinhSach = (Button) findViewById(R.id.btnChinhSach);
-        btnDoiMatkhau = (Button) findViewById(R.id.btnDoiMatkhau);
+        btnLogout = findViewById(R.id.btnLogout);
+        btnInternConnect = findViewById(R.id.btnInternConnect);
+        btnChinhSach =  findViewById(R.id.btnChinhSach);
+        btnDoiMatkhau = findViewById(R.id.btnDoiMatkhau);
         txtUsername1 = (TextView) findViewById(R.id.txtUsername1);
-        Account Username = (Account) getIntent().getSerializableExtra("acc");;
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");;
         txtUsername1.setText(Username.getName());
 
         btnDoiMatkhau.setOnClickListener(new View.OnClickListener() {

@@ -63,17 +63,19 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/imgUncheck"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"
                             android:layout_margin="11dp"
                             android:layout_toRightOf="@+id/txtEmail"
                             android:background="@drawable/tick"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                         </ImageView>
 
                         <ImageView
+                            android:id="@+id/imgCheck"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"

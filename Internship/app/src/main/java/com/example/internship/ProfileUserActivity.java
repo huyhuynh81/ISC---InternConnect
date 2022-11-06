@@ -139,7 +139,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (isValidEmail(edtEmail.getText().toString())) {
                                         if (male.isChecked()) {
-                                            Student student1 = new Student(edtCode.getText().toString(), edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nam", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString(), spnSchool.getSelectedItem().toString(), false);
+                                            Student student1 = new Student(userID, edtCode.getText().toString(), edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nam", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString(), spnSchool.getSelectedItem().toString(), "false");
                                             databaseReference.child(userID).setValue(student1)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
@@ -150,7 +150,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                                                     });
                                         }
                                         if (female.isChecked()) {
-                                            Student student1 = new Student(edtCode.getText().toString(), edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nữ", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString(), spnSchool.getSelectedItem().toString(), false);
+                                            Student student1 = new Student(userID, edtCode.getText().toString(), edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nữ", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString(), spnSchool.getSelectedItem().toString(), "false");
                                             databaseReference.child(userID).setValue(student1)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
@@ -191,7 +191,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (isValidEmail(edtEmail.getText().toString())) {
                                         if (male.isChecked()) {
-                                            Student student1 = new Student(edtCode.getText().toString(), edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nam", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString(), spnSchool.getSelectedItem().toString(), false);
+                                            Student student1 = new Student(userID, edtCode.getText().toString(), edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nam", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString(), spnSchool.getSelectedItem().toString(), "false");
                                             databaseReference.child(userID).setValue(student1)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
@@ -202,7 +202,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                                                     });
                                         }
                                         if (female.isChecked()) {
-                                            Student student1 = new Student(edtCode.getText().toString(), edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nữ", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString(), spnSchool.getSelectedItem().toString(), false);
+                                            Student student1 = new Student(userID, edtCode.getText().toString(), edtAcademicYear.getText().toString(), edtAddress.getText().toString(), edtEmail.getText().toString(), "Nữ", spnMajor.getSelectedItem().toString(), edtNameUser.getText().toString(), spnSchool.getSelectedItem().toString(), "false");
                                             databaseReference.child(userID).setValue(student1)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override

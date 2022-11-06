@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +46,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         edtCurrentPass = findViewById(R.id.edtCurrentPass);
         edtCurrentEmail = findViewById(R.id.edtCurrentEmail);
         btnUpdatePasswod = findViewById(R.id.btnUpdatePass);
-        Account Username = (Account) getIntent().getSerializableExtra("acc");
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         edtCurrentEmail.setText(Username.getEmail());
         edtCurrentEmail.setEnabled(false);
         final FirebaseDatabase db = FirebaseDatabase.getInstance();

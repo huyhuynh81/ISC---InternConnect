@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 import com.example.internship.Model.JobPost;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<JobPost> cpns;
     FirebaseDatabase db;
     DatabaseReference ref;
-    ImageButton imgUser, imgCreateCV;
+    ImageButton imgUser;
     TextView txtUsername;
     ChipNavigationBar chipNavigationBar;
 
@@ -56,25 +57,14 @@ public class HomeActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         ref = db.getReference("JobPost");
         loadData();
-        Account Username = (Account) getIntent().getSerializableExtra("acc");;
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
         imgUser = (ImageButton) findViewById(R.id.imgUser);
-        imgCreateCV = (ImageButton) findViewById(R.id.imgCreateCV);
         imgUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, UserDetailsActivity.class);
                 intent.putExtra("acc",Username);
-                startActivity(intent);
-            }
-        });
-
-        imgCreateCV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "https://www.cakeresume.com/cv-maker?ref=navs_cv_builder";
-                Intent intent= new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
                 startActivity(intent);
             }
         });

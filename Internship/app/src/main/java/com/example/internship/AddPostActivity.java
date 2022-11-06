@@ -20,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 import com.example.internship.Model.JobPost;
 import com.example.internship.Model.putImage;
 import com.example.internship.Model.putPDF;
@@ -36,6 +38,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 
+import kotlinx.coroutines.Job;
+
 public class AddPostActivity extends AppCompatActivity {
     EditText addPosition_Details, addName_Details, addLocation_Details, addSalary_Details, addGender_Details, addRequired_Details, addBenifit_Details, addNumber_Details;
     ImageButton addimgLogo_Details;
@@ -49,6 +53,7 @@ public class AddPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
 
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference("JobPost");
         addPosition_Details = findViewById(R.id.addPosition_Details);
@@ -60,6 +65,8 @@ public class AddPostActivity extends AppCompatActivity {
         addBenifit_Details = findViewById(R.id.addBenifit_Details);
         addNumber_Details = findViewById(R.id.addNumber_Details);
         addimgLogo_Details = findViewById(R.id.addimgLogo_Details);
+        addName_Details.setText(Username.getCompany());
+        addName_Details.setEnabled(false);
         txtLogo = findViewById(R.id.txtLogo);
         btnAdd = findViewById(R.id.btnAdd);
         btnBack = findViewById(R.id.btnBack);

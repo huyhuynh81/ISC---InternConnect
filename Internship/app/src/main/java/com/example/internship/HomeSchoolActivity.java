@@ -15,11 +15,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 import com.example.internship.Model.AccountSchool;
-import com.example.internship.Model.School;
 import com.example.internship.Model.Student;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,13 +58,13 @@ public class HomeSchoolActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         ref = db.getReference("Account");
         loadData();
-        Account Username = (Account) getIntent().getSerializableExtra("acc");
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
         imgSchool = (ImageButton) findViewById(R.id.imgSchool);
         imgSchool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeSchoolActivity.this, UserDetailsActivity.class);
+                Intent intent = new Intent(HomeSchoolActivity.this, AdminDetailsActivity.class);
                 intent.putExtra("acc", Username);
                 startActivity(intent);
             }
@@ -80,7 +79,6 @@ public class HomeSchoolActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ref1 = db.getReference("Student");
                 AccountSchool accountSchool = snapshot.child(userID).getValue(AccountSchool.class);
-                Student student = snapshot.child(userID).getValue(Student.class);
                     ref1.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {

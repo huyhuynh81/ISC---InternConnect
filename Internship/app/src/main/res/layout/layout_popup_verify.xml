@@ -4,28 +4,25 @@
     android:layout_height="310dp"
     android:layout_gravity="center"
     android:background="@drawable/border">
-
     <ImageView
         android:id="@+id/imgLogout"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:background="@drawable/imglogout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/imgsuccess">
-
+        android:layout_marginTop="20dp">
     </ImageView>
 
     <TextView
-        android:id="@+id/txtNotif"
+        android:id="@+id/txtLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgLogout"
+        android:text="Tài khoản chưa được xác thực"
+        android:textSize="18dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/arial"
-        android:text="Bạn đã ứng tuyển thành công"
-        android:textSize="18dp">
-
+        android:layout_below="@+id/imgLogout"
+        android:fontFamily="@font/arial">
     </TextView>
 
     <Button
@@ -38,6 +35,5 @@
         android:layout_marginTop="20dp"
         android:text="Trở lại"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/txtNotif" />
-
+        android:layout_below="@+id/txtLogout" />
 </RelativeLayout>

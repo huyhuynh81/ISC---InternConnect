@@ -1,6 +1,7 @@
 package com.example.internship;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -13,27 +14,40 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
     Dialog dialog;
     TextView txtUsername1;
-    Button btnLogout, btnInternConnect, btnChinhSach, btnHuy, btnDangXuat, btnDoiMatkhau, btnProfile;
+    Button btnHuy, btnDangXuat;
+    AppCompatButton btnProfile;
+    RelativeLayout btnDoiMatkhau, btnInternConnect, btnChinhSach, btnLogout;
+    ImageButton btnHomeBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
-        btnProfile= (Button) findViewById(R.id.btnProfile);
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-        btnInternConnect = (Button) findViewById(R.id.btnInternConnect);
-        btnChinhSach = (Button) findViewById(R.id.btnChinhSach);
-        btnDoiMatkhau = (Button) findViewById(R.id.btnDoiMatkhau);
+        btnProfile= findViewById(R.id.btnProfile);
+        btnLogout = findViewById(R.id.btnLogout);
+        btnInternConnect = findViewById(R.id.btnInternConnect);
+        btnChinhSach = findViewById(R.id.btnChinhSach);
+        btnDoiMatkhau = findViewById(R.id.btnDoiMatkhau);
+        btnHomeBack = findViewById(R.id.btnHomeBack);
         txtUsername1 = (TextView) findViewById(R.id.txtUsername1);
-        Account Username = (Account) getIntent().getSerializableExtra("acc");;
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         txtUsername1.setText(Username.getName());
+        btnHomeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,7 @@ package com.example.internship.Model;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +17,8 @@ public class SchoolVH extends RecyclerView.ViewHolder {
     private Context context;
 
     public TextView txtEmail, txtName, txtMajor;
-    public ImageView imgLogo;
+    public CheckBox chbVerifyHome;
+    public ImageView imgUncheck, imgcheck;
     public CardView cardV;
 
     public SchoolVH(@NonNull View itemView) {
@@ -26,5 +28,8 @@ public class SchoolVH extends RecyclerView.ViewHolder {
         txtName = itemView.findViewById(R.id.txtName);
         txtMajor = itemView.findViewById(R.id.txtMajor);
         cardV = itemView.findViewById(R.id.cardV);
+        imgcheck = itemView.findViewById(R.id.imgCheck);
+        imgUncheck = itemView.findViewById(R.id.imgUncheck);
+        //chbVerifyHome = itemView.findViewById(R.id.chbVerifyHome);
     }
 }

@@ -3,6 +3,7 @@ package com.example.internship.Model;
 import java.io.Serializable;
 
 public class Student implements Serializable {
+    private String ID;
     private String Code;
     private String AcademicYear;
     private String Address;
@@ -11,11 +12,12 @@ public class Student implements Serializable {
     private String Major;
     private String Name;
     private String School;
-    private boolean Verify;
+    private String Verify;
 
     public Student(){}
 
-    public Student(String code, String academicYear, String address, String email, String gender, String major, String name, String school, boolean verify) {
+    public Student(String ID, String code, String academicYear, String address, String email, String gender, String major, String name, String school, String verify) {
+        this.ID = ID;
         Code = code;
         AcademicYear = academicYear;
         Address = address;
@@ -25,6 +27,14 @@ public class Student implements Serializable {
         Name = name;
         School = school;
         Verify = verify;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getCode() {
@@ -91,11 +101,11 @@ public class Student implements Serializable {
         School = school;
     }
 
-    public boolean isVerify() {
+    public String getVerify() {
         return Verify;
     }
 
-    public void setVerify(boolean verify) {
+    public void setVerify(String verify) {
         Verify = verify;
     }
 }

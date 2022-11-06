@@ -14,7 +14,10 @@ import android.view.Menu;
 import android.widget.TextView;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 import com.example.internship.Model.JobApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +34,9 @@ public class JobAppActivity extends AppCompatActivity {
     JobAppAdapter adapter;
     ArrayList<JobApp> apps;
     FirebaseDatabase db;
-    DatabaseReference ref;
+    DatabaseReference ref, ref1;
+    FirebaseUser user;
+    private String userID;
     ChipNavigationBar chipNavigationBar;
     TextView txtUsername;
     SearchView searchView;
@@ -43,7 +48,7 @@ public class JobAppActivity extends AppCompatActivity {
         chipNavigationBar = findViewById(R.id.chipNavigationBar);
         txtUsername = findViewById(R.id.txtUsername);
         chipNavigationBar.setItemSelected(R.id.History,true);
-        Account Username = (Account) getIntent().getSerializableExtra("acc");
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
@@ -70,7 +75,9 @@ public class JobAppActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(manager);
         db = FirebaseDatabase.getInstance();
-        ref = db.getReference("JobApp");
+        ref = db.getReference("Account");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
         LinearLayoutManager manager1 = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(manager1);
         loadData();
@@ -80,16 +87,29 @@ public class JobAppActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                apps = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    JobApp jba = data.getValue(JobApp.class);
-                    apps.add(jba);
-                }
-                adapter = new JobAppAdapter(JobAppActivity.this, apps);
-                recycler_menu.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
+                ref1 = db.getReference("JobApp");
+                AccountCompany accountCompany = snapshot.child(userID).getValue(AccountCompany.class);
+                ref1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        apps = new ArrayList<>();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            JobApp jba = data.getValue(JobApp.class);
+                            if(accountCompany.getCompany().equals(jba.getNameCom())){
+                                apps.add(jba);
+                            }
+                        }
+                        adapter = new JobAppAdapter(JobAppActivity.this, apps);
+                        recycler_menu.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

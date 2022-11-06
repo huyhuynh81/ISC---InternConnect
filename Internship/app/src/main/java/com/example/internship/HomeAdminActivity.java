@@ -20,10 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
+import com.example.internship.Model.AccountSchool;
 import com.example.internship.Model.JobPost;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,13 +46,13 @@ public class HomeAdminActivity extends AppCompatActivity {
     ArrayList<JobPost> cpns;
     FirebaseDatabase db;
     BottomNavigationView bottomNavigationView;
-    DatabaseReference ref;
+    DatabaseReference ref, ref1;
     ImageButton imgAdmin;
     FloatingActionButton imgAddPost;
     TextView txtUsername;
     ChipNavigationBar chipNavigationBar;
-
-
+    FirebaseUser user;
+    private String userID;
 
 
     @Override
@@ -62,11 +66,13 @@ public class HomeAdminActivity extends AppCompatActivity {
         recycler_menu.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(manager);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
         db = FirebaseDatabase.getInstance();
-        ref = db.getReference("JobPost");
+        ref = db.getReference("Account");
 
         loadData();
-        Account Username = (Account) getIntent().getSerializableExtra("acc");
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
         imgAdmin = (ImageButton) findViewById(R.id.imgAdmin);
         imgAdmin.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +93,7 @@ public class HomeAdminActivity extends AppCompatActivity {
                         break;
                     case R.id.Addpost:
                         Intent intent = new Intent(HomeAdminActivity.this, AddPostActivity.class);
+                        intent.putExtra("acc", Username);
                         startActivity(intent);
                         break;
                     case R.id.History:
@@ -108,14 +115,29 @@ public class HomeAdminActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                cpns = new ArrayList<>();
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    JobPost cpn = data.getValue(JobPost.class);
-                    cpns.add(cpn);
-                }
-                adapter = new JobPostAdapter(HomeAdminActivity.this, cpns);
-                recycler_menu.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                ref1 = db.getReference("JobPost");
+                AccountCompany accountCompany = snapshot.child(userID).getValue(AccountCompany.class);
+                ref1.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        cpns = new ArrayList<>();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            JobPost cpn = data.getValue(JobPost.class);
+                            if(cpn.getName().equals(accountCompany.getCompany())){
+                                cpns.add(cpn);
+                            }
+                        }
+                        adapter = new JobPostAdapter(HomeAdminActivity.this, cpns);
+                        recycler_menu.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
 
             @Override

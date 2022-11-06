@@ -244,6 +244,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
+                        android:checked="true"
                         android:hint="Đã xác thực"
                         android:textSize="17dp"
                         android:gravity="left|center" />
@@ -269,7 +270,7 @@
                     android:text="Quay lại" />
 
                 <Button
-                    android:id="@+id/btnUpdatePost"
+                    android:id="@+id/btnUpdateStudent"
                     style="@style/loginButton"
                     android:layout_width="150dp"
                     android:layout_height="38dp"

@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 import com.example.internship.Model.AccountSchool;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,11 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     Spinner spnSchool1;
     DatabaseReference databaseReference;
-    List<String> name2;
+    List<String> name, name2;
     List<String> role;
     Button btnDangKy;
     TextView txtSignIn;
     EditText edtName, edtPhone, edtEmail, edtPass, edtRe_Password;
+    AutoCompleteTextView edtNameCompany;
     ImageView imgShowPass, imgShowPass1;
     RadioButton rdoAdmin, rdoStudent, rdoSchool;
     boolean isEnable;
@@ -57,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        edtNameCompany = findViewById(R.id.edtNameCompany);
         edtEmail = findViewById(R.id.edtEmail);
         edtName = findViewById(R.id.edtName);
         edtPass = findViewById(R.id.edtPassword);
@@ -69,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
         rdoSchool = findViewById(R.id.rdoSchool);
         spnSchool1 = findViewById(R.id.spnSchool1);
         spnSchool1.setEnabled(false);
+        edtNameCompany.setEnabled(false);
         role = new ArrayList<>();
         btnDangKy = findViewById(R.id.btnDangKy);
         txtSignIn = findViewById(R.id.txtSignIn);
@@ -79,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(rdoSchool.isChecked()){
                     spnSchool1.setEnabled(true);
+                    edtNameCompany.setEnabled(false);
                 }
             }
         });
@@ -88,6 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(rdoStudent.isChecked()){
                     spnSchool1.setEnabled(false);
+                    edtNameCompany.setEnabled(false);
                 }
             }
         });
@@ -97,6 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(rdoAdmin.isChecked()){
                     spnSchool1.setEnabled(false);
+                    edtNameCompany.setEnabled(true);
                 }
             }
         });
@@ -146,19 +154,40 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        name2 = new ArrayList<>();
+        name = new ArrayList<>();
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = db.getReference();
         databaseReference.child("School").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot childsnapshot : snapshot.getChildren()) {
-                    String SchoolName = childsnapshot.child("name").getValue(String.class);
-                    name2.add(SchoolName);
+                    String SchoolName = childsnapshot.child("nameSchool").getValue(String.class);
+                    name.add(SchoolName);
                 }
-                ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_spinner_item, name2);
+                ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_spinner_item, name);
                 arrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 spnSchool1.setAdapter(arrayAdapter2);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        name2 = new ArrayList<>();
+        databaseReference.child("Company").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childsnapshot : snapshot.getChildren()) {
+                    String CompanyName = childsnapshot.child("Name").getValue(String.class);
+                    name2.add(CompanyName);
+                }
+                ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_dropdown_item_1line, name2);
+                edtNameCompany.setThreshold(3);
+                //arrayAdapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                edtNameCompany.setAdapter(arrayAdapter2);
 
             }
 
@@ -202,7 +231,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     if (isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())) {
                                         if (rdoAdmin.isChecked()) {
-                                            Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 1);
+                                            AccountCompany account = new AccountCompany(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), edtNameCompany.getText().toString(), 1);
                                             ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override

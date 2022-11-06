@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -108,19 +109,19 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if(snapshot.child(firebaseAuth.getCurrentUser().getUid()).exists()){
-                                        Account acc = snapshot.child(firebaseAuth.getCurrentUser().getUid()).getValue(Account.class);
-                                        if (acc.getRole() == student) {
+                                        AccountCompany accCpn = snapshot.child(firebaseAuth.getCurrentUser().getUid()).getValue(AccountCompany.class);
+                                        if (accCpn.getRole() == student) {
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                            intent.putExtra("acc", acc);
+                                            intent.putExtra("acc", accCpn);
                                             startActivity(intent);
-                                        } else if (acc.getRole() == admin) {
+                                        } else if (accCpn.getRole() == admin) {
                                             Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
-                                            intent.putExtra("acc", acc);
+                                            intent.putExtra("acc", accCpn);
                                             startActivity(intent);
                                         }
-                                        else if(acc.getRole() == school){
+                                        else if(accCpn.getRole() == school){
                                             Intent intent = new Intent(getApplicationContext(), HomeSchoolActivity.class);
-                                            intent.putExtra("acc", acc);
+                                            intent.putExtra("acc", accCpn);
                                             startActivity(intent);
                                         }
                                     }

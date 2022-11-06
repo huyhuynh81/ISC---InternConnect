@@ -130,7 +130,6 @@ public class UploadActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         UploadFile(data.getData());
-                        createNotification();
                     }
                 });
             } else
@@ -202,6 +201,34 @@ public class UploadActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void openApplyPopupVerify(int gravity) {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_popup_verify);
+
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+        btnBack = (Button) dialog.findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
 
 
     private void UploadFile(Uri data) {
@@ -213,21 +240,28 @@ public class UploadActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Student student = snapshot.getValue(Student.class);
-                        storageReference = storageReference.child("Upload/" + System.currentTimeMillis() + ".pdf");
-                        storageReference.putFile(data)
-                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        openApplyPopup(Gravity.CENTER);
-                                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                                        while (!uriTask.isComplete()) ;
-                                        Uri url = uriTask.getResult();
-                                        Date d = new Date();
-                                        CharSequence s  = DateFormat.format("dd/MM/yyyy", d.getTime());
-                                        putPDF putPDF = new putPDF(txtPath.getText().toString(), url.toString(), student.getName(), intent, student.getMajor(), student.getSchool(),s.toString());
-                                        databaseReference.child(Objects.requireNonNull(databaseReference.push().getKey())).setValue(putPDF);
-                                    }
-                                });
+                        if(student.getVerify().equals("true")){
+                            storageReference = storageReference.child("Upload/" + System.currentTimeMillis() + ".pdf");
+                            storageReference.putFile(data)
+                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            createNotification();
+                                            openApplyPopup(Gravity.CENTER);
+                                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                                            while (!uriTask.isComplete()) ;
+                                            Uri url = uriTask.getResult();
+                                            Date d = new Date();
+                                            CharSequence s  = DateFormat.format("dd/MM/yyyy", d.getTime());
+                                            putPDF putPDF = new putPDF(txtPath.getText().toString(), url.toString(), student.getName(), intent, student.getMajor(), student.getSchool(),s.toString());
+                                            databaseReference.child(Objects.requireNonNull(databaseReference.push().getKey())).setValue(putPDF);
+                                        }
+                                    });
+                        }
+                        else if(student.getVerify().equals("false")){
+                            openApplyPopupVerify(Gravity.CENTER);
+                        }
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -241,6 +275,5 @@ public class UploadActivity extends AppCompatActivity {
 
             }
         });
-
     }
 }

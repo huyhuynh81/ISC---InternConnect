@@ -30,7 +30,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
                 android:fontFamily="@font/arial"
-                android:text="Xin chào,"
+                android:text="Xin chào, "
                 android:textSize="17dp" />
 
             <TextView
@@ -40,15 +40,9 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/arial"
                 android:hint="Tên người dùng"
+                android:paddingLeft="5dp"
                 android:textSize="17dp" />
 
-            <ImageButton
-                android:id="@+id/imgCreateCV"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="right|center"
-                android:layout_marginLeft="95dp"
-                android:background="@drawable/create_cv" />
 
         </LinearLayout>
     </RelativeLayout>

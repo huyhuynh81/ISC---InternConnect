@@ -60,6 +60,24 @@
         <item name="android:textStyle">bold</item>
     </style>
     <!--onboarding designs-->
+    <!--    theme cho nightModeSwitch-->
+    <style name="nightModeSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#F3A953</item >
+        <item name="colorSwitchThumbNormal">#E0E0E0</item>
+        <item name="android:colorForeground">#000</item>
+    </style>
+    <!--        them cho notificationSwitch-->
+    <style name="notificationSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#F3A953</item >
+        <item name="colorSwitchThumbNormal">#E0E0E0</item>
+        <item name="android:colorForeground">#000</item>
+    </style>
+    <!--        them cho rêmmberlogin-->
+    <style name="rememberlogin" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">#F3A953</item >
+        <item name="colorSwitchThumbNormal">#E0E0E0</item>
+        <item name="android:colorForeground">#000</item>
+    </style>
 
 
 </resources>

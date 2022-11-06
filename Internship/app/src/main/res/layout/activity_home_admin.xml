@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
                 android:fontFamily="@font/arial"
-                android:text="Xin chào admin,"
+                android:text="Xin chào, "
                 android:textSize="17dp" />
 
             <TextView
@@ -43,6 +43,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/arial"
                 android:hint="Tên người dùng"
+                android:paddingLeft="5dp"
                 android:textSize="17dp" />
 
         </LinearLayout>
