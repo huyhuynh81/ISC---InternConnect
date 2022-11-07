@@ -100,7 +100,7 @@ public class AddPostActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (data.getData() != null) {
                 Uri uri = data.getData();
@@ -121,6 +121,10 @@ public class AddPostActivity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 UploadFile(data.getData());
                                 Toast.makeText(AddPostActivity.this, "Add Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
+                                intent.putExtra("acc", Username);
+                                startActivity(intent);
+                                finish();
                             }
 
                             @Override
@@ -142,9 +146,9 @@ public class AddPostActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isComplete()) ;
+                        while (!uriTask.isComplete());
                         Uri url = uriTask.getResult();
-                        JobPost jb = new JobPost(addBenifit_Details.getText().toString(),
+                        JobPost jb = new JobPost(databaseReference.push().getKey(), addBenifit_Details.getText().toString(),
                                 addGender_Details.getText().toString(),
                                 addLocation_Details.getText().toString(),
                                 url.toString(),
@@ -154,7 +158,7 @@ public class AddPostActivity extends AppCompatActivity {
                                 addRequired_Details.getText().toString(),
                                 addSalary_Details.getText().toString()
                         );
-                        databaseReference.child(addName_Details.getText().toString()).setValue(jb);
+                        databaseReference.child(databaseReference.push().getKey()).setValue(jb);
                     }
                 });
     }

@@ -35,7 +35,7 @@ import java.util.Map;
 public class DetailsPostAdActivity extends AppCompatActivity {
 
     ImageView imgLogo_Details;
-    EditText edtPosition_Details, edtName_Details, edtLocation_Details, edtSalary_Details, edtGender_Details,
+    EditText edtId_Post, edtPosition_Details, edtName_Details, edtLocation_Details, edtSalary_Details, edtGender_Details,
             edtRequired_Details, edtBenefit_Details, edtNumber_Details;
     Button btnUpdatePost, btnQuaylai;
     ProgressDialog progressDialog;
@@ -47,7 +47,8 @@ public class DetailsPostAdActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details_post_ad);
         dialog = new Dialog(this);
         Account Username = (Account) getIntent().getSerializableExtra("acc");
-        JobPost cpn = (JobPost) getIntent().getSerializableExtra("obj_cpn");;
+        JobPost cpn = (JobPost) getIntent().getSerializableExtra("obj_cpn");
+        edtId_Post = findViewById(R.id.edtId_Post);
         edtPosition_Details = findViewById(R.id.edtPosition_Details);
         edtName_Details = findViewById(R.id.edtName_Details);
         edtLocation_Details = findViewById(R.id.edtLocation_Details);
@@ -57,6 +58,7 @@ public class DetailsPostAdActivity extends AppCompatActivity {
         edtBenefit_Details = findViewById(R.id.edtBenifit_Details);
         edtNumber_Details = findViewById(R.id.edtNumber_Details);
         imgLogo_Details = findViewById(R.id.imgLogoAd_Details);
+        edtId_Post.setText(cpn.getId_Post());
         edtPosition_Details.setText(cpn.getPosition());
         edtName_Details.setText(cpn.getName());
         edtLocation_Details.setText(cpn.getLocation());
@@ -145,6 +147,7 @@ public class DetailsPostAdActivity extends AppCompatActivity {
                         String _Name = edtName_Details.getText().toString();
                         FirebaseDatabase db = FirebaseDatabase.getInstance();
                         DatabaseReference reference = db.getReference("JobPost");
+//                        DatabaseReference reference1 = db.getReference("JobPost").child();
                         Map<String,Object> map = new HashMap<>();
                         map.put("Benefit",edtBenefit_Details.getText().toString().trim());
                         map.put("Gender",edtGender_Details.getText().toString().trim());
@@ -157,7 +160,7 @@ public class DetailsPostAdActivity extends AppCompatActivity {
                         reference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                reference.child(edtName_Details.getText().toString().trim()).updateChildren(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                reference.child(edtId_Post.getText().toString()).updateChildren(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Toast.makeText(DetailsPostAdActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
