@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.internship.Model.Account;
+import com.example.internship.Model.AccountCompany;
 import com.example.internship.Model.JobApp;
 import com.example.internship.Model.Student;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,7 +44,7 @@ public class HistoryActivity extends AppCompatActivity {
         chipNavigationBar = findViewById(R.id.chipNavigationBar);
         txtUsername = findViewById(R.id.txtUsername);
         chipNavigationBar.setItemSelected(R.id.History,true);
-        Account Username = (Account) getIntent().getSerializableExtra("acc");
+        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override

@@ -261,6 +261,9 @@ public class UploadActivity extends AppCompatActivity {
                         else if(student.getVerify().equals("false")){
                             openApplyPopupVerify(Gravity.CENTER);
                         }
+                        else if(student.getVerify().isEmpty()){
+                            openApplyPopupVerify(Gravity.CENTER);
+                        }
 
                     }
                     @Override

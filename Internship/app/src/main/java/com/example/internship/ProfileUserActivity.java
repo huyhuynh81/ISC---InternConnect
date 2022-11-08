@@ -10,6 +10,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -34,6 +35,7 @@ import java.util.regex.Pattern;
 
 public class ProfileUserActivity extends AppCompatActivity {
     Spinner spnMajor, spnSchool;
+    CheckBox chkVerify;
     DatabaseReference databaseReference, databaseReference2;
     List<String> name;
     List<String> name2;
@@ -49,7 +51,7 @@ public class ProfileUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_user);
-
+        chkVerify = findViewById(R.id.chkVerify);
         edtNameUser = findViewById(R.id.edtNameUser);
         edtCode = findViewById(R.id.edtCode);
         edtAcademicYear = findViewById(R.id.edtAcademicYear);
@@ -177,6 +179,12 @@ public class ProfileUserActivity extends AppCompatActivity {
                     edtAddress.setText(student.getAddress());
                     edtAcademicYear.setText(student.getAcademicYear());
                     //spnSchool.getAdapter(student.getSchool().toString());
+                    if(student.getVerify().equals("true")){
+                        chkVerify.setChecked(true);
+                    }
+                    else {
+                        chkVerify.setChecked(false);
+                    }
                     if(student.getGender().equals("Nữ")){
                         female.setChecked(true);
                     }
