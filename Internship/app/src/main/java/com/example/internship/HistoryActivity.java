@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.example.internship.Model.Account;
 import com.example.internship.Model.AccountCompany;
 import com.example.internship.Model.JobApp;
-import com.example.internship.Model.Student;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +28,7 @@ import maes.tech.intentanim.CustomIntent;
 
 public class HistoryActivity extends AppCompatActivity {
     RecyclerView recycler_menu;
-    JobAppAdapter adapter;
+    JopAppUserAdapter adapter;
     ArrayList<JobApp> hisUser;
     FirebaseDatabase db;
     DatabaseReference ref, ref1;
@@ -95,7 +94,7 @@ public class HistoryActivity extends AppCompatActivity {
                                 hisUser.add(jba);
                             }
                         }
-                        adapter = new JobAppAdapter(HistoryActivity.this, hisUser);
+                        adapter = new JopAppUserAdapter(HistoryActivity.this, hisUser);
                         recycler_menu.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }
@@ -113,4 +112,3 @@ public class HistoryActivity extends AppCompatActivity {
         });
     }
 }
-

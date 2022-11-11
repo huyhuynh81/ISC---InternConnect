@@ -20,4 +20,7 @@
     <color name="security">#D95F69</color>
     <color name="underline">#D8D6D6</color>
 
+    <color name="accept">#38E54D</color>
+    <color name="refuse"> #E14D2A</color>
+
 </resources>

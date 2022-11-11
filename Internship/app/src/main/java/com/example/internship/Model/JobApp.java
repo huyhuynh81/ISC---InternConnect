@@ -3,17 +3,35 @@ package com.example.internship.Model;
 import java.io.Serializable;
 
 public class JobApp implements Serializable {
-    private  String NameUser, url, NameCom, Major,  NameSchool, DateApp;
+    private  String NameUser, url, NameCom, Major,  NameSchool, DateApp, Status,id_User;
 
     public JobApp(){}
 
-    public JobApp(String nameUser, String url, String nameCom, String major, String nameSchool, String dateApp) {
+    public JobApp(String nameUser, String url, String nameCom, String major, String nameSchool, String dateApp, String status, String user_ID) {
         NameUser = nameUser;
         this.url = url;
         NameCom = nameCom;
         Major = major;
         NameSchool = nameSchool;
         DateApp = dateApp;
+        Status = status;
+        id_User = user_ID;
+    }
+
+    public String getId_User() {
+        return id_User;
+    }
+
+    public void setId_User(String id_User) {
+        this.id_User = id_User;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 
     public String getMajor() {

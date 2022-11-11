@@ -23,7 +23,7 @@ public class JobAppVH  extends RecyclerView.ViewHolder{
     public TextView txtCV;
     public TextView txtName;
     public TextView txtMajor;
-    public TextView txtNameSchool;
+    public TextView txtNameSchool, txtStatus;
     public TextView txtDateApp;
     public CardView cardview;
     public ImageButton pdfButton;
@@ -38,6 +38,7 @@ public class JobAppVH  extends RecyclerView.ViewHolder{
         txtNameSchool =(TextView) itemView.findViewById(R.id.txtName_School);
         txtName = (TextView) itemView.findViewById(R.id.txtUsername);
         txtDateApp = (TextView) itemView.findViewById(R.id.txtDateApp);
+        txtStatus = (TextView) itemView.findViewById(R.id.txtStatus);
         cardview = (CardView) itemView.findViewById(R.id.History_layout);
         pdfButton = (ImageButton)  itemView.findViewById(R.id.PDFimg);
     }

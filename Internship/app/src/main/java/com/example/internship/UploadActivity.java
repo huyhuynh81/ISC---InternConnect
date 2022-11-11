@@ -55,7 +55,7 @@ import java.util.Objects;
 
 public class UploadActivity extends AppCompatActivity {
 
-    Button btnUpload, btnApply, btnBack, btnQuaylai;
+    Button btnUpload, btnApply, btnBack, btnQuaylai, btnLienHe;
     TextView txtPath;
     Dialog dialog;
     StorageReference storageReference;
@@ -218,6 +218,15 @@ public class UploadActivity extends AppCompatActivity {
         windowAttributes.gravity = gravity;
         window.setAttributes(windowAttributes);
         btnBack = (Button) dialog.findViewById(R.id.btnBack);
+        btnLienHe = (Button) dialog.findViewById(R.id.btnLienHe);
+
+        btnLienHe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UploadActivity.this, ProfileUserActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,6 +249,10 @@ public class UploadActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Student student = snapshot.getValue(Student.class);
+                        String code = databaseReference.push().getKey();
+                        if(student == null){
+                            openApplyPopupVerify(Gravity.CENTER);
+                        }
                         if(student.getVerify().equals("true")){
                             storageReference = storageReference.child("Upload/" + System.currentTimeMillis() + ".pdf");
                             storageReference.putFile(data)
@@ -253,18 +266,14 @@ public class UploadActivity extends AppCompatActivity {
                                             Uri url = uriTask.getResult();
                                             Date d = new Date();
                                             CharSequence s  = DateFormat.format("dd/MM/yyyy", d.getTime());
-                                            putPDF putPDF = new putPDF(txtPath.getText().toString(), url.toString(), student.getName(), intent, student.getMajor(), student.getSchool(),s.toString());
-                                            databaseReference.child(Objects.requireNonNull(databaseReference.push().getKey())).setValue(putPDF);
+                                            putPDF putPDF = new putPDF(txtPath.getText().toString(), url.toString(), student.getName(), intent, student.getMajor(), student.getSchool(),s.toString(),"Chờ xử lý",code);
+                                            databaseReference.child(code).setValue(putPDF);
                                         }
                                     });
                         }
                         else if(student.getVerify().equals("false")){
                             openApplyPopupVerify(Gravity.CENTER);
                         }
-                        else if(student.getVerify().isEmpty()){
-                            openApplyPopupVerify(Gravity.CENTER);
-                        }
-
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -278,5 +287,6 @@ public class UploadActivity extends AppCompatActivity {
 
             }
         });
+
     }
 }
