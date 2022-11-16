@@ -32,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.example.internship.Model.Account;
 import com.example.internship.Model.Student;
 import com.example.internship.Model.putPDF;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,9 +48,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
+import java.util.Locale;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -253,7 +251,7 @@ public class UploadActivity extends AppCompatActivity {
                         if(student == null){
                             openApplyPopupVerify(Gravity.CENTER);
                         }
-                        if(student.getVerify().equals("true")){
+                        else {
                             storageReference = storageReference.child("Upload/" + System.currentTimeMillis() + ".pdf");
                             storageReference.putFile(data)
                                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -264,16 +262,16 @@ public class UploadActivity extends AppCompatActivity {
                                             Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                                             while (!uriTask.isComplete()) ;
                                             Uri url = uriTask.getResult();
+                                            Locale id = new Locale("in", "ID");
+                                            SimpleDateFormat sim = new SimpleDateFormat("dd/MM/yyyy", id);
                                             Date d = new Date();
-                                            CharSequence s  = DateFormat.format("dd/MM/yyyy", d.getTime());
-                                            putPDF putPDF = new putPDF(txtPath.getText().toString(), url.toString(), student.getName(), intent, student.getMajor(), student.getSchool(),s.toString(),"Chờ xử lý",code);
+                                            String s  = sim.format(d.getTime());
+                                            putPDF putPDF = new putPDF(txtPath.getText().toString(), url.toString(), student.getName(), intent, student.getMajor(), student.getSchool(),s,"Chờ xử lý", student.getVerify(),code);
                                             databaseReference.child(code).setValue(putPDF);
                                         }
                                     });
                         }
-                        else if(student.getVerify().equals("false")){
-                            openApplyPopupVerify(Gravity.CENTER);
-                        }
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {

@@ -9,13 +9,14 @@ public class putPDF {
     String nameSchool;
     String Date;
     String Status;
+    String Verify;
     String ID_User;
 
 
 
     public putPDF(){}
 
-    public putPDF(String name, String url, String nameUser, String nameCom, String major, String nameSchool, String date, String status, String ID_User) {
+    public putPDF(String name, String url, String nameUser, String nameCom, String major, String nameSchool, String date, String status, String verify, String ID_User) {
         this.name = name;
         this.url = url;
         this.nameUser = nameUser;
@@ -24,47 +25,8 @@ public class putPDF {
         this.nameSchool = nameSchool;
         Date = date;
         Status = status;
+        Verify = verify;
         this.ID_User = ID_User;
-    }
-
-    public String getID_User() {
-        return ID_User;
-    }
-
-    public void setID_User(String ID_User) {
-        this.ID_User = ID_User;
-    }
-
-    public String getStatus() {
-        return Status;
-    }
-
-    public void setStatus(String status) {
-        Status = status;
-    }
-
-    public String getDate() {
-        return Date;
-    }
-
-    public void setDate(String date) {
-        Date = date;
-    }
-
-    public String getMajor() {
-        return Major;
-    }
-
-    public void setMajor(String major) {
-        Major = major;
-    }
-
-    public String getNameSchool() {
-        return nameSchool;
-    }
-
-    public void setNameSchool(String nameSchool) {
-        this.nameSchool = nameSchool;
     }
 
     public String getName() {
@@ -97,5 +59,53 @@ public class putPDF {
 
     public void setNameCom(String nameCom) {
         this.nameCom = nameCom;
+    }
+
+    public String getMajor() {
+        return Major;
+    }
+
+    public void setMajor(String major) {
+        Major = major;
+    }
+
+    public String getNameSchool() {
+        return nameSchool;
+    }
+
+    public void setNameSchool(String nameSchool) {
+        this.nameSchool = nameSchool;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public String getVerify() {
+        return Verify;
+    }
+
+    public void setVerify(String verify) {
+        Verify = verify;
+    }
+
+    public String getID_User() {
+        return ID_User;
+    }
+
+    public void setID_User(String ID_User) {
+        this.ID_User = ID_User;
     }
 }

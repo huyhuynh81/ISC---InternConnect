@@ -11,6 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.internship.Model.Account;
@@ -40,6 +43,7 @@ public class JobAppActivity extends AppCompatActivity {
     ChipNavigationBar chipNavigationBar;
     TextView txtUsername;
     SearchView searchView;
+    ImageButton imgUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,15 @@ public class JobAppActivity extends AppCompatActivity {
                         break;
                 }
 
+            }
+        });
+        imgUser = findViewById(R.id.imgUser);
+        imgUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(JobAppActivity.this, AdminDetailsActivity.class);
+                intent.putExtra("acc",Username);
+                startActivity(intent);
             }
         });
         recycler_menu = findViewById(R.id.recycler_JobApply);

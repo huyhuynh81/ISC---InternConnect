@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.internship.Model.Account;
@@ -36,6 +38,7 @@ public class HistoryActivity extends AppCompatActivity {
     private String userID;
     ChipNavigationBar chipNavigationBar;
     TextView txtUsername;
+    ImageButton imgUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,15 @@ public class HistoryActivity extends AppCompatActivity {
                         break;
                 }
 
+            }
+        });
+        imgUser = findViewById(R.id.imgUser);
+        imgUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HistoryActivity.this, UserDetailsActivity.class);
+                intent.putExtra("acc",Username);
+                startActivity(intent);
             }
         });
         recycler_menu = findViewById(R.id.recycler_HistoryUser);

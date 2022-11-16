@@ -17,7 +17,7 @@
         android:id="@+id/txtLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tài khoản chưa được xác thực"
+        android:text="Bạn chưa cập nhật thông tin"
         android:textSize="18dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -57,7 +57,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:text="Hỗ trợ" />
+            android:text="Cập nhật" />
 
     </LinearLayout>
 </RelativeLayout>

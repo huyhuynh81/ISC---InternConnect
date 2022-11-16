@@ -47,10 +47,10 @@ public class JopAppUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         JobAppVH vh = (JobAppVH) holder;
         JobApp jba = lsJobApply.get(position);
 
-        String datetime = jba.getDateApp();
-        Calendar date = Calendar.getInstance();
-        SimpleDateFormat sim = new SimpleDateFormat("dd/MM/yyyy");
-        datetime = sim.format(date.getTime());
+//        String datetime = jba.getDateApp();
+//        Calendar date = Calendar.getInstance();
+//        SimpleDateFormat sim = new SimpleDateFormat("dd/MM/yyyy");
+//        datetime = sim.format(date.getTime());
 
 
 
@@ -59,7 +59,7 @@ public class JopAppUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         vh.txtCV.setText(jba.getUrl());
         vh.txtNameSchool.setText(jba.getNameSchool());
         vh.txtMajor.setText(jba.getMajor());
-        vh.txtDateApp.setText(datetime.toString());
+        vh.txtDateApp.setText(jba.getDate());
         vh.txtStatus.setText(jba.getStatus());
 
 //        vh.pdfButton.setOnClickListener(new View.OnClickListener() {

@@ -23,14 +23,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class DetailsJobAppActivity extends AppCompatActivity {
 
-    TextView txtNameCom_JA, txtNameUser_JA, txtNameSchool_JA, txtMajor_JA, txtDate_JA,txtStatus_JA, txtCV_JA;
+    TextView txtNameCom_JA, txtNameUser_JA, txtNameSchool_JA, txtMajor_JA, txtDate_JA, txtStatus_JA, txtCV_JA, txtVerify;
     ImageButton imgCV_JA;
 
     Button btnAccept, btnRefuse;
@@ -38,6 +40,7 @@ public class DetailsJobAppActivity extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference reference;
     private String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,21 +55,27 @@ public class DetailsJobAppActivity extends AppCompatActivity {
         btnAccept = (Button) findViewById(R.id.btnAccept_JA);
         btnRefuse = (Button) findViewById(R.id.btnRefuse_JA);
         txtCV_JA = (TextView) findViewById(R.id.txtCV_JA);
+        txtVerify = (TextView) findViewById(R.id.txtVerify);
 
-        JobApp cpn = (JobApp) getIntent().getSerializableExtra("obj_JobApp");;
+        JobApp jba = (JobApp) getIntent().getSerializableExtra("obj_JobApp");
 
-        String datetime = cpn.getDateApp();
-        Calendar date = Calendar.getInstance();
-        SimpleDateFormat sim = new SimpleDateFormat("dd/MM/yyyy");
-        datetime = sim.format(date.getTime());
+//        String datetime = jba.getDateApp();
+//        Calendar date = Calendar.getInstance();
+//        SimpleDateFormat sim = new SimpleDateFormat("dd/MM/yyyy");
+//        datetime = sim.format(date.getTime());
 
-        txtCV_JA.setText(cpn.getUrl());
-        txtNameCom_JA.setText(cpn.getNameCom());
-        txtNameUser_JA.setText(cpn.getNameUser());
-        txtNameSchool_JA.setText(cpn.getNameSchool());
-        txtMajor_JA.setText(cpn.getMajor());
-        txtDate_JA.setText(datetime);
-        txtStatus_JA.setText(cpn.getStatus());
+        txtCV_JA.setText(jba.getUrl());
+        txtNameCom_JA.setText(jba.getNameCom());
+        txtNameUser_JA.setText(jba.getNameUser());
+        txtNameSchool_JA.setText(jba.getNameSchool());
+        txtMajor_JA.setText(jba.getMajor());
+        txtDate_JA.setText(jba.getDate());
+        txtStatus_JA.setText(jba.getStatus());
+        if (jba.getVerify().equals("true")) {
+            txtVerify.setText("Tài khoản đã xác thực");
+        } else if (jba.getVerify().equals("false")) {
+            txtVerify.setText("Tài khoản chưa xác thực");
+        }
 
         btnRefuse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +93,7 @@ public class DetailsJobAppActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         map.put("status", "Không xác nhận");
-                        reference.child(cpn.getId_User()).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        reference.child(jba.getID_User()).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(DetailsJobAppActivity.this, "Success", Toast.LENGTH_SHORT).show();
@@ -116,7 +125,7 @@ public class DetailsJobAppActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         map.put("status", "Đã xác nhận");
-                        reference.child(cpn.getId_User()).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        reference.child(jba.getID_User()).updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(DetailsJobAppActivity.this, "Success", Toast.LENGTH_SHORT).show();
