@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.internship.Model.Account;
@@ -33,6 +37,7 @@ public class AccountAdminActivity extends AppCompatActivity {
     ImageButton add_admin;
     TextView txtUsername;
     ChipNavigationBar chipNavigationBar;
+    androidx.appcompat.widget.SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,7 @@ public class AccountAdminActivity extends AppCompatActivity {
         txtUsername = (TextView) findViewById(R.id.txtUsername);
         chipNavigationBar = findViewById(R.id.chipNavigationBar);
         recycler_menu = findViewById(R.id.recyclere_account_admin);
+        searchView = findViewById(R.id.sr_Job);
         recycler_menu.setHasFixedSize(true);
         LinearLayoutManager manager6 = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(manager6);
@@ -93,5 +99,28 @@ public class AccountAdminActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (androidx.appcompat.widget.SearchView) menu.findItem(R.id.sr_Job).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if(adapter != null){
+                    adapter.getFilter().filter(s);
+                }
+                return false;
+            }
+        });
+        return true;
+    }
 
 }

@@ -64,45 +64,7 @@ public class AddAccountAdminActivity extends AppCompatActivity {
         name = new ArrayList<>();
         final FirebaseDatabase db = FirebaseDatabase.getInstance();
         final DatabaseReference databaseReference = db.getReference();
-        databaseReference.child("School").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot childsnapshot : snapshot.getChildren()) {
-                    String SchoolName = childsnapshot.child("nameSchool").getValue(String.class);
-                    name.add(SchoolName);
-                }
-                ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(AddAccountAdminActivity.this, android.R.layout.simple_spinner_item, name);
-                arrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                spnSchool1.setAdapter(arrayAdapter2);
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        name2 = new ArrayList<>();
-        databaseReference.child("Company").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot childsnapshot : snapshot.getChildren()) {
-                    String CompanyName = childsnapshot.child("Name").getValue(String.class);
-                    name2.add(CompanyName);
-                }
-                ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(AddAccountAdminActivity.this, android.R.layout.simple_dropdown_item_1line, name2);
-                edtNameCompany.setThreshold(3);
-                //arrayAdapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-                edtNameCompany.setAdapter(arrayAdapter2);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,13 +88,13 @@ public class AddAccountAdminActivity extends AppCompatActivity {
                     final DatabaseReference ref = db.getReference("Account");
                     String email = edtEmail.getText().toString();
                     String pass = edtPass.getText().toString();
-                    String code = databaseReference.push().getKey();
                     firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 if (isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())) {
                                     if (rdoAdmin.isChecked()) {
+                                        String code = databaseReference.push().getKey();
                                         Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 4,code);
                                         ref.child(code).setValue(account)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {

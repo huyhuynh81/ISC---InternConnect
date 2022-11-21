@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.example.internship.Model.Account;
 import com.example.internship.Model.AccountVH;
+import com.example.internship.Model.Company;
 import com.example.internship.Model.CompanyVH;
 import com.example.internship.Model.JobPost;
 import com.example.internship.Model.JobPostVH;
@@ -24,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AccountAdminAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -94,4 +97,63 @@ public class AccountAdminAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         return 0;
     }
+
+    public Filter getFilter()
+    {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Account> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(lsAccountFilter);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Account item : lsAccountFilter) {
+                    String role = String.valueOf(item.getRole());
+                    String nameRole;
+                    if(role.equals("1")){
+                        nameRole = "Công ty";
+                        if(nameRole.toLowerCase().contains(filterPattern)){
+                            filteredList.add(item);
+                        }
+                    }
+                    else if(role.equals("2")){
+                        nameRole = "Sinh viên";
+                        if(nameRole.toLowerCase().contains(filterPattern)){
+                            filteredList.add(item);
+                        }
+                    }
+                    else if(role.equals("3")){
+                        nameRole = "Trường";
+                        if(nameRole.toLowerCase().contains(filterPattern)){
+                            filteredList.add(item);
+                        }
+                    }
+                    else if(role.equals("4")){
+                        nameRole = "Admin";
+                        if(nameRole.toLowerCase().contains(filterPattern)){
+                            filteredList.add(item);
+                        }
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults results) {
+            lsAccount.clear();
+            lsAccount.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
