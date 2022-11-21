@@ -100,7 +100,7 @@ public class AddAccountAdminActivity extends AppCompatActivity {
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        Toast.makeText(AddAccountAdminActivity.this, "Create up Successfully", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(AddAccountAdminActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(AddAccountAdminActivity.this, AccountAdminActivity.class);
                                                         startActivity(intent);
                                                     }

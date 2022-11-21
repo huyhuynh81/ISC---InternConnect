@@ -114,7 +114,7 @@ public class AddPostActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 UploadFile(data.getData());
-                                Toast.makeText(AddPostActivity.this, "Add Successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddPostActivity.this, "Tạo bài đăng thành công", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), HomeCompanyActivity.class);
                                 intent.putExtra("acc", Username);
                                 startActivity(intent);

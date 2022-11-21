@@ -16,6 +16,8 @@ import com.example.internship.Model.JobPostComVH;
 import com.example.internship.Model.JobPostVH;
 import com.example.internship.Model.Major;
 import com.example.internship.Model.MajorVH;
+import com.example.internship.Model.School;
+import com.example.internship.Model.SchoolVH;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,54 +31,54 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MajorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class SchoolAdminAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     Context context;
-    ArrayList<Major> lsMajor = new ArrayList<>();
-    ArrayList<Major> lsMajorFilter = new ArrayList<>();
+    ArrayList<School> lsSchool = new ArrayList<>();
+    ArrayList<School> lsSchoolFilter = new ArrayList<>();
 
     public void release(){context = null;}
 
-    public MajorAdapter(Context ctx, ArrayList<Major> lsMajor)
+    public SchoolAdminAdapter(Context ctx, ArrayList<School> lsSchool)
     {
         this.context = ctx;
-        this.lsMajor = lsMajor;
-        this.lsMajorFilter = new ArrayList<>(lsMajor);
+        this.lsSchool = lsSchool;
+        this.lsSchoolFilter = new ArrayList<>(lsSchool);
     }
 
 
-    public void setItems(ArrayList<Major> mjs){
-        lsMajor.addAll(mjs);
+    public void setItems(ArrayList<School> sch){
+        lsSchool.addAll(sch);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view =  LayoutInflater.from(context).inflate(R.layout.layout_item_major, parent,false);
-        return new MajorVH(view);
+        View view =  LayoutInflater.from(context).inflate(R.layout.layout_item_school_admin, parent,false);
+        return new SchoolVH(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MajorVH vh = (MajorVH) holder;
-        Major mjs = lsMajor.get(position);
-        vh.txtNameMajor.setText(mjs.getName());
-        vh.txtDateAdd.setText(mjs.getDate());
-        vh.txtNameMajor.setEnabled(false);
+        SchoolVH vh = (SchoolVH) holder;
+        School sch = lsSchool.get(position);
+        vh.txtNameSchool.setText(sch.getNameSchool());
+        vh.txtDateAdd.setText(sch.getDate());
+        vh.txtNameSchool.setEnabled(false);
         vh.txtDateAdd.setEnabled(false);
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference reference = db.getReference("Major");
-        ((MajorVH) holder).imgDelete.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference reference = db.getReference("School");
+        ((SchoolVH) holder).imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                lsMajor.remove(holder.getAdapterPosition());
+                lsSchool.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
 
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        reference.child(((MajorVH) holder).txtNameMajor.getText().toString().trim()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        reference.child(((SchoolVH) holder).txtNameSchool.getText().toString().trim()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
@@ -100,8 +102,8 @@ public class MajorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 //    }
 
     public int getItemCount() {
-        if(lsMajor != null){
-            return lsMajor.size();
+        if(lsSchool != null){
+            return lsSchool.size();
         }
         return 0;
     }
@@ -114,15 +116,15 @@ public class MajorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Major> filteredList = new ArrayList<>();
+            List<School> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(lsMajorFilter);
+                filteredList.addAll(lsSchoolFilter);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (Major item : lsMajorFilter) {
-                    if (item.getName().toLowerCase().contains(filterPattern)) {
+                for (School item : lsSchoolFilter) {
+                    if (item.getNameSchool().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
@@ -136,8 +138,8 @@ public class MajorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults results) {
-            lsMajor.clear();
-            lsMajor.addAll((List)results.values);
+            lsSchool.clear();
+            lsSchool.addAll((List)results.values);
             notifyDataSetChanged();
         }
     };

@@ -126,32 +126,32 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
-
             <RelativeLayout
-                android:id="@+id/imgSchoolAd"
+                android:id="@+id/imgMajorAd"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
+                android:background="@drawable/backgroundimage"
                 android:padding="8dp">
 
                 <ImageView
-                    android:id="@+id/School"
-                    android:layout_width="50dp"
+                    android:id="@+id/Notify"
+                    android:layout_width="80dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/school"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/icon_major"
                     android:padding="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/School"
+                    android:layout_below="@+id/Notify"
                     android:layout_centerInParent="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Quản lý trường"
+                    android:text="Quản lý ngành"
                     android:textAllCaps="true"
                     android:textColor="@color/colorAccent"
                     android:textSize="12dp"
@@ -192,16 +192,47 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/imgSettingAd"
+                android:id="@+id/imgSchoolAd"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/School"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/school"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/School"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Quản lý trường"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/imgSettingAd"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
                 android:background="@drawable/backgroundimage"
                 android:padding="8dp">
 
@@ -229,36 +260,7 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:background="@drawable/backgroundimage"
-                android:padding="8dp">
 
-                <ImageView
-                    android:id="@+id/Notify"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginEnd="15dp"
-                    android:background="@drawable/notification"
-                    android:padding="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/Notify"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="Thông báo"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="12dp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/imgLogoutAd"

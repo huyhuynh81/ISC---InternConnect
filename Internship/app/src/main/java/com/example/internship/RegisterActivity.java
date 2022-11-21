@@ -237,7 +237,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
-                                                            Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                                                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                                             startActivity(intent);
                                                         }
@@ -250,7 +250,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
-                                                            Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                                                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                                             startActivity(intent);
                                                         }
@@ -263,7 +263,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
-                                                            Toast.makeText(RegisterActivity.this, "Sign up Successfully", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                                                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                                             startActivity(intent);
                                                         }

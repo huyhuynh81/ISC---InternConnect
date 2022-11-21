@@ -3,8 +3,10 @@ package com.example.internship;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class DetailsAccountAdminActivity extends AppCompatActivity {
     EditText edtEmailAcc_Details_Admin, edtRole_Details_Admin, edtPass_Details_Admin, edtNameAcc_Details_Admin,edtPhoneAcc_Details_Admin;
     Button btnUpdatePostAcc_Admin, btnDeleteAcc_Admin;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,24 @@ public class DetailsAccountAdminActivity extends AppCompatActivity {
         btnUpdatePostAcc_Admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog = new ProgressDialog(DetailsAccountAdminActivity.this);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.show();
+                progressDialog.setTitle("Đang kết nối...");
+
+                Runnable progressRunable = new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.cancel();
+                    }
+                };
+                Handler pdCanceller = new Handler();
+                pdCanceller.postDelayed(progressRunable,500);
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(
+                        android.R.color.transparent
+                );
+
                 edtEmailAcc_Details_Admin.setEnabled(true);
                 edtPass_Details_Admin.setEnabled(true);
                 edtNameAcc_Details_Admin.setEnabled(true);
@@ -64,6 +85,23 @@ public class DetailsAccountAdminActivity extends AppCompatActivity {
                 btnUpdatePostAcc_Admin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        progressDialog = new ProgressDialog(DetailsAccountAdminActivity.this);
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        progressDialog.show();
+                        progressDialog.setTitle("Connecting");
+
+                        Runnable progressRunable = new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.cancel();
+                            }
+                        };
+                        Handler pdCanceller = new Handler();
+                        pdCanceller.postDelayed(progressRunable,500);
+                        progressDialog.setContentView(R.layout.progress_dialog);
+                        progressDialog.getWindow().setBackgroundDrawableResource(
+                                android.R.color.transparent
+                        );
                         FirebaseDatabase db = FirebaseDatabase.getInstance();
                         DatabaseReference reference = db.getReference("Account");
                         Map<String,Object> map = new HashMap<>();

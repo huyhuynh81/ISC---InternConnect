@@ -10,7 +10,7 @@ import android.widget.Filter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.internship.Model.SchoolVH;
+import com.example.internship.Model.AccountSchoolVH;
 import com.example.internship.Model.Student;
 
 
@@ -41,12 +41,12 @@ public class SchoolAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view =  LayoutInflater.from(context).inflate(R.layout.layout_item_student, parent,false);
-        return new SchoolVH(view);
+        return new AccountSchoolVH(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        SchoolVH vh = (SchoolVH) holder;
+        AccountSchoolVH vh = (AccountSchoolVH) holder;
         Student std = lsStudent.get(position);
         vh.txtName.setText(std.getName());
         vh.txtEmail.setText(std.getEmail());

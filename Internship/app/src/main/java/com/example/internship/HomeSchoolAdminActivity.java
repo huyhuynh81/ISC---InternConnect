@@ -12,8 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.internship.Model.AccountCompany;
-import com.example.internship.Model.JobPost;
-import com.example.internship.Model.Major;
+import com.example.internship.Model.School;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,12 +28,12 @@ import java.util.ArrayList;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class HomeMajorActivity extends AppCompatActivity {
+public class HomeSchoolAdminActivity extends AppCompatActivity {
 
     androidx.appcompat.widget.SearchView searchView;
     RecyclerView recycler_menu;
-    MajorAdapter adapter;
-    ArrayList<Major> mjs;
+    SchoolAdminAdapter adapter;
+    ArrayList<School> sch;
     FirebaseDatabase db;
     BottomNavigationView bottomNavigationView;
     DatabaseReference ref, ref1;
@@ -60,7 +59,7 @@ public class HomeMajorActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
         db = FirebaseDatabase.getInstance();
-        ref = db.getReference("Major");
+        ref = db.getReference("School");
 
         loadData();
         AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
@@ -69,13 +68,13 @@ public class HomeMajorActivity extends AppCompatActivity {
         imgAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeMajorActivity.this, CompanyDetailsActivity.class);
+                Intent intent = new Intent(HomeSchoolAdminActivity.this, CompanyDetailsActivity.class);
                 intent.putExtra("acc", Username);
                 startActivity(intent);
             }
         });
         chipNavigationBar.setItemSelected(R.id.Home, true);
-        recycler_menu.setOnTouchListener(new TranslateAnimationUtil(HomeMajorActivity.this, chipNavigationBar));
+        recycler_menu.setOnTouchListener(new TranslateAnimationUtil(HomeSchoolAdminActivity.this, chipNavigationBar));
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int i) {
@@ -83,15 +82,15 @@ public class HomeMajorActivity extends AppCompatActivity {
                     case R.id.Home:
                         break;
                     case R.id.Addpost:
-                        Intent intent = new Intent(HomeMajorActivity.this, AddMajorActivity.class);
+                        Intent intent = new Intent(HomeSchoolAdminActivity.this, AddSchoolAdminActivity.class);
                         intent.putExtra("acc", Username);
                         startActivity(intent);
                         break;
                     case R.id.Back:
-                        Intent intent1 = new Intent(HomeMajorActivity.this, HomeAdminActivity.class);
+                        Intent intent1 = new Intent(HomeSchoolAdminActivity.this, HomeAdminActivity.class);
                         intent1.putExtra("acc", Username);
                         startActivity(intent1);
-                        CustomIntent.customType(HomeMajorActivity.this, "fadein-to-fadeout");
+                        CustomIntent.customType(HomeSchoolAdminActivity.this, "fadein-to-fadeout");
                         break;
                 }
 
@@ -104,12 +103,12 @@ public class HomeMajorActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mjs = new ArrayList<>();
+                sch = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    Major major = data.getValue(Major.class);
-                    mjs.add(major);
+                    School school = data.getValue(School.class);
+                    sch.add(school);
                 }
-                adapter = new MajorAdapter(HomeMajorActivity.this, mjs);
+                adapter = new SchoolAdminAdapter(HomeSchoolAdminActivity.this, sch);
                 recycler_menu.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }

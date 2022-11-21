@@ -36,7 +36,7 @@ import maes.tech.intentanim.CustomIntent;
 public class HomeAdminActivity extends AppCompatActivity {
 
     Dialog dialog;
-    RelativeLayout imgSchoolAd, imgCompanyAd, imgLogoutAd, imgAccountAd, imgSettingAd;
+    RelativeLayout imgSchoolAd, imgCompanyAd, imgLogoutAd, imgAccountAd, imgSettingAd, imgMajorAd;
     FirebaseDatabase db;
     DatabaseReference ref, ref1;
     ImageButton imgAdmin;
@@ -72,9 +72,18 @@ public class HomeAdminActivity extends AppCompatActivity {
             }
         });
 
-
         imgSchoolAd = (RelativeLayout) findViewById(R.id.imgSchoolAd);
         imgSchoolAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeAdminActivity.this, HomeSchoolAdminActivity.class);
+                intent.putExtra("acc",Username);
+                startActivity(intent);
+            }
+        });
+
+        imgMajorAd = (RelativeLayout) findViewById(R.id.imgMajorAd);
+        imgMajorAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeAdminActivity.this, HomeMajorActivity.class);

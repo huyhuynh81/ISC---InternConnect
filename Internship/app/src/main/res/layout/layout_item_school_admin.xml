@@ -53,8 +53,8 @@
                 <ImageView
                     android:id="@+id/imgLogo"
                     android:background="@drawable/user"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:contentDescription="@null" />
             </LinearLayout>
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/txtNameMajor"
+                        android:id="@+id/txtNameSchool"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp"
