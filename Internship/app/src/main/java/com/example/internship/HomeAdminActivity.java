@@ -1,38 +1,32 @@
 package com.example.internship;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.SearchManager;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.internship.Model.Account;
 import com.example.internship.Model.AccountCompany;
-import com.example.internship.Model.AccountSchool;
 import com.example.internship.Model.JobPost;
-import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.ArrayList;
@@ -40,150 +34,109 @@ import java.util.ArrayList;
 import maes.tech.intentanim.CustomIntent;
 
 public class HomeAdminActivity extends AppCompatActivity {
-    androidx.appcompat.widget.SearchView searchView;
-    RecyclerView recycler_menu;
-    JobPostAdapter adapter;
-    ArrayList<JobPost> cpns;
+
+    Dialog dialog;
+    RelativeLayout imgSchoolAd, imgCompanyAd, imgLogoutAd, imgAccountAd, imgSettingAd;
     FirebaseDatabase db;
-    BottomNavigationView bottomNavigationView;
     DatabaseReference ref, ref1;
     ImageButton imgAdmin;
-    FloatingActionButton imgAddPost;
     TextView txtUsername;
     ChipNavigationBar chipNavigationBar;
     FirebaseUser user;
     private String userID;
+    Button btnHuy, btnDangXuat;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_admin);
+
         txtUsername = (TextView) findViewById(R.id.txtUsername);
-        searchView = findViewById(R.id.sr_Job);
-        recycler_menu = findViewById(R.id.recyclere_menu);
-        chipNavigationBar = findViewById(R.id.chipNavigationBar);
-        recycler_menu.setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recycler_menu.setLayoutManager(manager);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
         db = FirebaseDatabase.getInstance();
         ref = db.getReference("Account");
 
-        loadData();
+        dialog = new Dialog(this);
+
         AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
-        imgAdmin = (ImageButton) findViewById(R.id.imgAdmin);
-        imgAdmin.setOnClickListener(new View.OnClickListener() {
+        imgCompanyAd = (RelativeLayout) findViewById(R.id.imgCompanyAd);
+        imgCompanyAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeAdminActivity.this, AdminDetailsActivity.class);
+                Intent intent = new Intent(HomeAdminActivity.this, HomeCompanyAdminActivity.class);
                 intent.putExtra("acc",Username);
                 startActivity(intent);
             }
         });
-        chipNavigationBar.setItemSelected(R.id.Home,true);
-        recycler_menu.setOnTouchListener(new TranslateAnimationUtil(HomeAdminActivity.this,chipNavigationBar));
-        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int i) {
-                switch (i){
-                    case R.id.Home:
-                        break;
-                    case R.id.Addpost:
-                        Intent intent = new Intent(HomeAdminActivity.this, AddPostActivity.class);
-                        intent.putExtra("acc", Username);
-                        startActivity(intent);
-                        break;
-                    case R.id.History:
-                        Intent intent1 = new Intent(HomeAdminActivity.this, JobAppActivity.class);
-                        intent1.putExtra("acc",Username);
-                        startActivity(intent1);
-                        CustomIntent.customType(HomeAdminActivity.this,"fadein-to-fadeout");
-                        break;
-                }
 
+
+        imgSchoolAd = (RelativeLayout) findViewById(R.id.imgSchoolAd);
+        imgSchoolAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeAdminActivity.this, HomeMajorActivity.class);
+                intent.putExtra("acc",Username);
+                startActivity(intent);
+            }
+        });
+
+        imgLogoutAd = (RelativeLayout) findViewById(R.id.imgLogoutAd);
+        imgLogoutAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openLogoutPopup(Gravity.CENTER);
+            }
+        });
+
+        imgAccountAd = (RelativeLayout) findViewById(R.id.imgAccountAd);
+        imgAccountAd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeAdminActivity.this, AccountAdminActivity.class);
+                intent.putExtra("acc",Username);
+                startActivity(intent);
             }
         });
 
     }
 
+    private void openLogoutPopup(int gravity) {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_popup_logout);
 
-    public void loadData(){
-        db = FirebaseDatabase.getInstance();
-        ref.addValueEventListener(new ValueEventListener() {
+        Window window = dialog.getWindow();
+        if(window == null){
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+        btnHuy = (Button) dialog.findViewById(R.id.btnHuy);
+        btnDangXuat = (Button) dialog.findViewById(R.id.btnDangXuat);
+
+        btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ref1 = db.getReference("JobPost");
-                AccountCompany accountCompany = snapshot.child(userID).getValue(AccountCompany.class);
-                ref1.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        cpns = new ArrayList<>();
-                        for (DataSnapshot data : snapshot.getChildren()) {
-                            JobPost cpn = data.getValue(JobPost.class);
-                            if(cpn.getName().equals(accountCompany.getCompany())){
-                                cpns.add(cpn);
-                            }
-                        }
-                        adapter = new JobPostAdapter(HomeAdminActivity.this, cpns);
-                        recycler_menu.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeAdminActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (androidx.appcompat.widget.SearchView) menu.findItem(R.id.sr_Job).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
 
+        btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextChange(String s) {
-                if(adapter != null){
-                    adapter.getFilter().filter(s);
-                }
-                return false;
+            public void onClick(View view) {
+                dialog.dismiss();
             }
         });
-        return true;
-    }
 
-//    public void SearchData(){
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                if(adapter != null){
-//                    adapter.getFilter().filter(s);
-//                }
-//                return false;
-//            }
-//        });
-//    }
+        dialog.show();
+    }
 }

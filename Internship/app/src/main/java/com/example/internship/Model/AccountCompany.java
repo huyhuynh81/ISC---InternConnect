@@ -9,17 +9,27 @@ public class AccountCompany implements Serializable {
     private String Name;
     private String Company;
     private Integer Role;
+    private String Id_account;
 
 
     public AccountCompany() {}
 
-    public AccountCompany(String phone, String email, String pass, String name, String company, Integer role) {
+    public AccountCompany(String phone, String email, String pass, String name, String company, Integer role, String id_account) {
         Phone = phone;
         Email = email;
         Pass = pass;
         Name = name;
         Company = company;
         Role = role;
+        Id_account = id_account;
+    }
+
+    public String getId_account() {
+        return Id_account;
+    }
+
+    public void setId_account(String id_account) {
+        Id_account = id_account;
     }
 
     public String getPhone() {

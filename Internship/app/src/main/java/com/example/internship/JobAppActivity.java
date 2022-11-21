@@ -13,10 +13,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.internship.Model.Account;
 import com.example.internship.Model.AccountCompany;
 import com.example.internship.Model.JobApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,7 +57,7 @@ public class JobAppActivity extends AppCompatActivity {
             public void onItemSelected(int i) {
                 switch (i){
                     case R.id.Home:
-                        Intent intent1 = new Intent(JobAppActivity.this, HomeAdminActivity.class);
+                        Intent intent1 = new Intent(JobAppActivity.this, HomeCompanyActivity.class);
                         intent1.putExtra("acc",Username);
                         startActivity(intent1);
                         CustomIntent.customType(JobAppActivity.this,"fadein-to-fadeout");
@@ -78,7 +76,7 @@ public class JobAppActivity extends AppCompatActivity {
         imgUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(JobAppActivity.this, AdminDetailsActivity.class);
+                Intent intent = new Intent(JobAppActivity.this, CompanyDetailsActivity.class);
                 intent.putExtra("acc",Username);
                 startActivity(intent);
             }

@@ -1,31 +1,44 @@
 package com.example.internship;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.example.internship.Model.Account;
 import com.example.internship.Model.JobPost;
-import com.example.internship.Model.JobPostVH;
+import com.example.internship.Model.JobPostComVH;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class JobPostComAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     Context context;
     ArrayList<JobPost> lsJobPost = new ArrayList<>();
     ArrayList<JobPost> lsJobPostFilter = new ArrayList<>();
-
+    ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+    ProgressDialog progressDialog;
+    Dialog dialog;
     public void release(){context = null;}
 
-    public JobPostAdapter(Context ctx, ArrayList<JobPost> lsJobPost)
+    public JobPostComAdapter(Context ctx, ArrayList<JobPost> lsJobPost)
     {
         this.context = ctx;
         this.lsJobPost = lsJobPost;
@@ -40,24 +53,61 @@ public class JobPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view =  LayoutInflater.from(context).inflate(R.layout.layout_item_jobpost, parent,false);
-        return new JobPostVH(view);
+        View view =  LayoutInflater.from(context).inflate(R.layout.layout_item, parent,false);
+        return new JobPostComVH(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        JobPostVH vh = (JobPostVH) holder;
+        JobPostComVH vh = (JobPostComVH) holder;
         JobPost cpn = lsJobPost.get(position);
+        if(cpn == null){
+            return;
+        }
+
+        viewBinderHelper.bind(((JobPostComVH) holder).SwipeRevealLayout,cpn.getName());
+        ((JobPostComVH) holder).txtIdPost.setText(cpn.getId_Post());
+        vh.txtName_Company.setText(cpn.getName());
         vh.txtName_Company.setText(cpn.getName());
         vh.txtPosition.setText(cpn.getPosition());
         vh.txtNumber.setText(cpn.getNumber());
         String image = cpn.getLogo();
         Picasso.with(context).load(image).into(vh.imgLogo);
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference reference = db.getReference("JobPost");
+        ((JobPostComVH) holder).imgxoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lsJobPost.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        reference.child(((JobPostComVH) holder).txtIdPost.getText().toString().trim()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(context, "Delete Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+        });
+
+
         vh.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailsActivity.class);
+                Intent intent = new Intent(context, DetailsPostComActivity.class);
                 intent.putExtra("obj_cpn", cpn);
+                intent.putExtra("obj_acc", Account.class);
                 context.startActivity(intent);
             }
         });

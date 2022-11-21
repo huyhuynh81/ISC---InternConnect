@@ -23,27 +23,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class CompanyVH  extends RecyclerView.ViewHolder {
+public class CompanyVH extends RecyclerView.ViewHolder {
 
     private Context context;
 
-    public TextView txtName_Company, txtPosition, txtNumber;
-    public ImageView imgLogo;
+    public TextView txtName_Company_Admin, txtPosition_Admin, txtEmail_Admin;
+    public ImageView imgLogo_Admin;
     public CardView cardview;
-    public SwipeRevealLayout SwipeRevealLayout;
-    public RelativeLayout layout_delete;
-    public ImageView imgxoa;
+
 
     public CompanyVH(@NonNull View itemView) {
         super(itemView);
-        txtName_Company = (TextView) itemView.findViewById(R.id.txtName_Company);
-        txtPosition = (TextView) itemView.findViewById(R.id.txtPosition);
-        txtNumber = (TextView) itemView.findViewById(R.id.txtNumber);
-        imgLogo = (ImageView) itemView.findViewById(R.id.imgLogo);
-        cardview = (CardView) itemView.findViewById(R.id.cardV);
-        SwipeRevealLayout=(SwipeRevealLayout)itemView.findViewById(R.id.SwipeRevealLayout);
-        layout_delete = (RelativeLayout) itemView.findViewById(R.id.layout_delete);
-        imgxoa = (ImageView) itemView.findViewById(R.id.imgDelete);
-
+        txtName_Company_Admin = (TextView) itemView.findViewById(R.id.txtName_Company_Admin);
+        txtPosition_Admin = (TextView) itemView.findViewById(R.id.txtPosition_Admin);
+        txtEmail_Admin = (TextView) itemView.findViewById(R.id.txtEmail_Company_Admin);
+        imgLogo_Admin = (ImageView) itemView.findViewById(R.id.imgLogo_admin);
+        cardview = (CardView) itemView.findViewById(R.id.card_com_admin);
     }
 }

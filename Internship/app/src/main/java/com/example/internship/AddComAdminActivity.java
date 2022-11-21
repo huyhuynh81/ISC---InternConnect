@@ -3,11 +3,8 @@ package com.example.internship;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,14 +12,15 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.internship.Model.AccountCompany;
-import com.example.internship.Model.JobPost;
+import com.example.internship.Model.Company;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,55 +32,43 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 
-public class AddPostActivity extends AppCompatActivity {
-    EditText addPosition_Details, addName_Details, addLocation_Details, addSalary_Details, addGender_Details, addRequired_Details, addBenifit_Details, addNumber_Details;
-    ImageButton addimgLogo_Details;
-    Button btnAdd, btnBack;
-    DatabaseReference databaseReference;
+public class AddComAdminActivity extends AppCompatActivity {
+    ImageView imgLogoAd_Add_Admin;
+    EditText edtEmail_Add_Admin, edtName_Add_Admin, edtLocation_Add_Admin, edtPhone_Add_Admin;
+    Button btnAddPost_Admin_Add;
     StorageReference storageReference;
-    TextView txtLogo;
+    DatabaseReference databaseReference;
+    FirebaseUser user;
+    FirebaseAuth auth;
+    DatabaseReference reference;
+    DatabaseReference reference2;
+    private  String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_post);
+        setContentView(R.layout.activity_add_com_admin);
 
-        AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
+        edtEmail_Add_Admin = findViewById(R.id.edtEmail_Add_Admin);
+        edtName_Add_Admin = findViewById(R.id.edtName_Add_Admin);
+        edtLocation_Add_Admin = findViewById(R.id.edtLocation_Add_Admin);
+        edtPhone_Add_Admin = findViewById(R.id.edtPhone_Add_Admin);
+        imgLogoAd_Add_Admin = findViewById(R.id.imgLogoAd_Add_Admin);
+        btnAddPost_Admin_Add = findViewById(R.id.btnUpdatePost_Admin_Add);
+
         storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference("JobPost");
-        addPosition_Details = findViewById(R.id.addPosition_Details);
-        addName_Details = findViewById(R.id.addName_Details);
-        addLocation_Details = findViewById(R.id.addLocation_Details);
-        addSalary_Details = findViewById(R.id.addSalary_Details);
-        addGender_Details = findViewById(R.id.addGender_Details);
-        addRequired_Details = findViewById(R.id.addRequired_Details);
-        addBenifit_Details = findViewById(R.id.addBenifit_Details);
-        addNumber_Details = findViewById(R.id.addNumber_Details);
-        addimgLogo_Details = findViewById(R.id.addimgLogo_Details);
-        addName_Details.setText(Username.getCompany());
-        addName_Details.setEnabled(false);
-        txtLogo = findViewById(R.id.txtLogo);
-        btnAdd = findViewById(R.id.btnAdd);
-        btnBack = findViewById(R.id.btnBack);
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Company");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Company");
+        imgLogoAd_Add_Admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                selectImage();
             }
         });
-        addimgLogo_Details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ActivityCompat.checkSelfPermission(AddPostActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(AddPostActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                } else {
-                    selectImage();
-                }
-            }
-        });
-
     }
+
+
 
     private void selectImage() {
         Intent intent = new Intent();
@@ -101,22 +87,20 @@ public class AddPostActivity extends AppCompatActivity {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                     Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap, 60, 60, true);
-                    addimgLogo_Details.setImageBitmap(bitmap1);
-                    txtLogo.setVisibility(View.GONE);
+                    imgLogoAd_Add_Admin.setImageBitmap(bitmap1);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                btnAdd.setOnClickListener(new View.OnClickListener() {
+                btnAddPost_Admin_Add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         databaseReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 UploadFile(data.getData());
-                                Toast.makeText(AddPostActivity.this, "Add Successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), HomeCompanyActivity.class);
-                                intent.putExtra("acc", Username);
+                                Toast.makeText(AddComAdminActivity.this, "Add Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), HomeCompanyAdminActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
@@ -134,28 +118,22 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     private void UploadFile(Uri data) {
-        String s = databaseReference.push().getKey();
         storageReference = storageReference.child(System.currentTimeMillis() + ".png");
         storageReference.putFile(data)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isComplete());
+                        while (!uriTask.isComplete()) ;
                         Uri url = uriTask.getResult();
-                        JobPost jb = new JobPost(s, addBenifit_Details.getText().toString(),
-                                addGender_Details.getText().toString(),
-                                addLocation_Details.getText().toString(),
+                        Company jb = new Company(
+                                edtEmail_Add_Admin.getText().toString(),
+                                edtLocation_Add_Admin.getText().toString(),
                                 url.toString(),
-                                addName_Details.getText().toString(),
-                                addNumber_Details.getText().toString(),
-                                addPosition_Details.getText().toString(),
-                                addRequired_Details.getText().toString(),
-                                addSalary_Details.getText().toString()
-                        );
-                        databaseReference.child(s).setValue(jb);
+                                edtName_Add_Admin.getText().toString(),
+                                edtPhone_Add_Admin.getText().toString());
+                        databaseReference.child(edtName_Add_Admin.getText().toString()).setValue(jb);
                     }
                 });
     }
-
 }

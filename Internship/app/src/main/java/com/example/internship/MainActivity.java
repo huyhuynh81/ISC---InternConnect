@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.internship.Model.Account;
 import com.example.internship.Model.AccountCompany;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +22,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -34,9 +31,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imgShowPass;
     boolean isEnable;
     TextView txtForgotPass, txtSignUp;
-    Integer admin = 1;
-    Integer student = 2;
-    Integer school = 3;
+    Integer company = 1, student = 2, school = 3, admin = 4;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -114,13 +109,18 @@ public class MainActivity extends AppCompatActivity {
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                             intent.putExtra("acc", accCpn);
                                             startActivity(intent);
-                                        } else if (accCpn.getRole() == admin) {
-                                            Intent intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
+                                        } else if (accCpn.getRole() == company) {
+                                            Intent intent = new Intent(getApplicationContext(), HomeCompanyActivity.class);
                                             intent.putExtra("acc", accCpn);
                                             startActivity(intent);
                                         }
                                         else if(accCpn.getRole() == school){
                                             Intent intent = new Intent(getApplicationContext(), HomeSchoolActivity.class);
+                                            intent.putExtra("acc", accCpn);
+                                            startActivity(intent);
+                                        }
+                                        else if(accCpn.getRole() == admin){
+                                            Intent intent = new Intent(getApplicationContext(), HomeAdminActivity .class);
                                             intent.putExtra("acc", accCpn);
                                             startActivity(intent);
                                         }

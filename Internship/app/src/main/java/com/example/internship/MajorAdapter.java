@@ -10,64 +10,57 @@ import android.widget.Filter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.internship.Model.Company;
-import com.example.internship.Model.CompanyVH;
 import com.example.internship.Model.JobPost;
 import com.example.internship.Model.JobPostVH;
+import com.example.internship.Model.Major;
+import com.example.internship.Model.MajorVH;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class MajorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     Context context;
-    ArrayList<Company> lsCompany = new ArrayList<>();
-    ArrayList<Company> lsCompanyFilter = new ArrayList<>();
+    ArrayList<Major> lsMajor = new ArrayList<>();
+    ArrayList<Major> lsMajorFilter = new ArrayList<>();
 
     public void release(){context = null;}
 
-    public CompanyAdapter(Context ctx, ArrayList<Company> lsCompany)
+    public MajorAdapter(Context ctx, ArrayList<Major> lsMajor)
     {
         this.context = ctx;
-        this.lsCompany = lsCompany;
-        this.lsCompanyFilter = new ArrayList<>(lsCompany);
+        this.lsMajor = lsMajor;
+        this.lsMajorFilter = new ArrayList<>(lsMajor);
     }
 
 
-    public void setItems(ArrayList<Company> cpn){
-        lsCompany.addAll(cpn);
+    public void setItems(ArrayList<Major> mjs){
+        lsMajor.addAll(mjs);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view =  LayoutInflater.from(context).inflate(R.layout.layout_item_com_admin, parent,false);
-        return new CompanyVH(view);
+        View view =  LayoutInflater.from(context).inflate(R.layout.layout_item_major, parent,false);
+        return new MajorVH(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        CompanyVH vh2 = (CompanyVH) holder;
-        Company cpn = lsCompany.get(position);
-        vh2.txtName_Company_Admin.setText(cpn.getLocation());
-        vh2.txtPosition_Admin.setText(cpn.getName());
-//        vh2.txtEmail_Admin.setText(cpn.getEmail());
-        String image = cpn.getLogo();
-        Picasso.with(context).load(image).into(vh2.imgLogo_Admin);
-        vh2.cardview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context,DetailsComAdminActivity.class);
-                intent.putExtra("detail_com" , cpn);
-                context.startActivity(intent);
-            }
-        });
+        MajorVH vh = (MajorVH) holder;
+        Major mjs = lsMajor.get(position);
+        vh.txtNameMajor.setText(mjs.getName());
+        vh.txtDateAdd.setText(mjs.getDate());
     }
 
+//    private void onClicktoDetails(Company cpn) {
+//
+//    }
+
     public int getItemCount() {
-        if(lsCompany != null){
-            return lsCompany.size();
+        if(lsMajor != null){
+            return lsMajor.size();
         }
         return 0;
     }
@@ -80,14 +73,14 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Company> filteredList = new ArrayList<>();
+            List<Major> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(lsCompanyFilter);
+                filteredList.addAll(lsMajorFilter);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (Company item : lsCompanyFilter) {
+                for (Major item : lsMajorFilter) {
                     if (item.getName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
@@ -102,8 +95,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults results) {
-            lsCompany.clear();
-            lsCompany.addAll((List)results.values);
+            lsMajor.clear();
+            lsMajor.addAll((List)results.values);
             notifyDataSetChanged();
         }
     };

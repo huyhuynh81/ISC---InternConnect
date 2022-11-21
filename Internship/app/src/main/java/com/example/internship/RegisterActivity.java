@@ -231,8 +231,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     if (isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())) {
                                         if (rdoAdmin.isChecked()) {
-                                            AccountCompany account = new AccountCompany(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), edtNameCompany.getText().toString(), 1);
-                                            ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
+                                            String ID = firebaseAuth.getCurrentUser().getUid();
+                                            AccountCompany account = new AccountCompany(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), edtNameCompany.getText().toString(), 1, ID);
+                                            ref.child(ID).setValue(account)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
@@ -243,8 +244,9 @@ public class RegisterActivity extends AppCompatActivity {
                                                     });
                                         }
                                         else if (rdoStudent.isChecked()) {
-                                            Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 2);
-                                            ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
+                                            String ID = firebaseAuth.getCurrentUser().getUid();
+                                            Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 2, ID);
+                                            ref.child(ID).setValue(account)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
@@ -255,8 +257,9 @@ public class RegisterActivity extends AppCompatActivity {
                                                     });
                                         }
                                         else if(rdoSchool.isChecked()){
-                                            AccountSchool account = new AccountSchool(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 3, spnSchool1.getSelectedItem().toString());
-                                            ref.child(firebaseAuth.getCurrentUser().getUid()).setValue(account)
+                                            String ID = firebaseAuth.getCurrentUser().getUid();
+                                            AccountSchool account = new AccountSchool(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 3, spnSchool1.getSelectedItem().toString(), ID);
+                                            ref.child(ID).setValue(account)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
