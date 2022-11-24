@@ -78,7 +78,7 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/bottom_border"
         android:padding="8dp"
-        app:cnb_menuResource="@menu/menuitemadmin">
+        app:cnb_menuResource="@menu/menuitemcompanyadmin">
 
     </com.ismaeldivita.chipnavigation.ChipNavigationBar>
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -88,6 +89,7 @@ public class DetailsComAdminActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Toast.makeText(DetailsComAdminActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
+
                                     }
                                 });
                             }
@@ -99,6 +101,10 @@ public class DetailsComAdminActivity extends AppCompatActivity {
                 });
             }
         });
+
+
+
+
         btnDelete_Admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,10 +113,12 @@ public class DetailsComAdminActivity extends AppCompatActivity {
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        reference.child(edtName_Details_Admin.getText().toString().trim()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        reference.child(edtName_Details_Admin.getText().toString()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(DetailsComAdminActivity.this, "Delete Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(DetailsComAdminActivity.this, HomeCompanyAdminActivity.class);
+                                startActivity(intent);
                                 finish();
                             }
                         });

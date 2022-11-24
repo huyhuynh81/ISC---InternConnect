@@ -98,13 +98,19 @@ public class MainActivity extends AppCompatActivity {
             firebaseAuth.signInWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (firebaseAuth.getCurrentUser().isEmailVerified()) {
-                        if (task.isSuccessful()) {
-                            ref.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if(snapshot.child(firebaseAuth.getCurrentUser().getUid()).exists()){
-                                        AccountCompany accCpn = snapshot.child(firebaseAuth.getCurrentUser().getUid()).getValue(AccountCompany.class);
+
+                    if (task.isSuccessful()) {
+                        ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.child(firebaseAuth.getCurrentUser().getUid()).exists()){
+                                    AccountCompany accCpn = snapshot.child(firebaseAuth.getCurrentUser().getUid()).getValue(AccountCompany.class);
+                                    if(accCpn.getRole() == admin){
+                                        Intent intent = new Intent(getApplicationContext(), HomeAdminActivity .class);
+                                        intent.putExtra("acc", accCpn);
+                                        startActivity(intent);
+                                    }
+                                    else if (firebaseAuth.getCurrentUser().isEmailVerified()) {
                                         if (accCpn.getRole() == student) {
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                             intent.putExtra("acc", accCpn);
@@ -119,28 +125,29 @@ public class MainActivity extends AppCompatActivity {
                                             intent.putExtra("acc", accCpn);
                                             startActivity(intent);
                                         }
-                                        else if(accCpn.getRole() == admin){
-                                            Intent intent = new Intent(getApplicationContext(), HomeAdminActivity .class);
-                                            intent.putExtra("acc", accCpn);
-                                            startActivity(intent);
-                                        }
+//                                            else if(accCpn.getRole() == admin){
+//                                                Intent intent = new Intent(getApplicationContext(), HomeAdminActivity .class);
+//                                                intent.putExtra("acc", accCpn);
+//                                                startActivity(intent);
+//                                            }
                                     }
                                     else {
-                                        Toast.makeText(MainActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MainActivity.this, "Tài khoản không xác thực", Toast.LENGTH_SHORT).show();
                                     }
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
                                 }
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                }
-                            });
-                        } else {
-                            Toast.makeText(MainActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
-                        }
+                            }
+                        });
                     } else {
-                        Toast.makeText(MainActivity.this, "Tài khoản chưa xác thực", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
                     }
+
                 }
             });
         }

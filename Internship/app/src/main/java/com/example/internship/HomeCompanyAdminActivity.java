@@ -12,9 +12,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.internship.Model.Account;
 import com.example.internship.Model.AccountCompany;
 import com.example.internship.Model.Company;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +40,9 @@ public class HomeCompanyAdminActivity extends AppCompatActivity {
     ImageButton Add_Com;
     TextView txtUsername;
     ChipNavigationBar chipNavigationBar;
+    FirebaseUser user;
+    DatabaseReference reference;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,23 @@ public class HomeCompanyAdminActivity extends AppCompatActivity {
         recycler_menu.setLayoutManager(manager);
         db = FirebaseDatabase.getInstance();
         ref = db.getReference("Company");
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Account");
+        userID = user.getUid();
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Account accProfile = snapshot.getValue(Account.class);
+                if (accProfile != null) {
+                    String UserName = accProfile.getName();
+                    txtUsername.setText(UserName);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HomeCompanyAdminActivity.this, "Something wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
         AccountCompany Username = (AccountCompany) getIntent().getSerializableExtra("acc");
         txtUsername.setText(Username.getName());
 

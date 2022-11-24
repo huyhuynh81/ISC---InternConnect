@@ -111,7 +111,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/user_group"/>
+                        android:background="@drawable/address"/>
                     <EditText
                         android:id="@+id/edtLocation_Details_Admin"
                         android:justificationMode="inter_word"
@@ -136,7 +136,7 @@
                         android:layout_height="40dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="15dp"
-                        android:background="@drawable/address"/>
+                        android:background="@drawable/phone_icon"/>
                     <EditText
                         android:id="@+id/edtPhone_Details_Admin"
                         android:justificationMode="inter_word"

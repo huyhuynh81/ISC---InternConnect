@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,8 +46,6 @@ public class AddAccountAdminActivity extends AppCompatActivity {
     EditText edtName, edtPhone, edtEmail, edtPass, edtRe_Password;
     AutoCompleteTextView edtNameCompany;
     ImageView imgShowPass, imgShowPass1;
-    RadioButton rdoAdmin, rdoStudent, rdoSchool;
-    boolean isEnable;
     FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,35 +83,58 @@ public class AddAccountAdminActivity extends AppCompatActivity {
                     Toast.makeText(AddAccountAdminActivity.this, "Bạn chưa nhập lại mật khẩu", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    final FirebaseDatabase db = FirebaseDatabase.getInstance();
-                    final DatabaseReference ref = db.getReference("Account");
-                    String email = edtEmail.getText().toString();
-                    String pass = edtPass.getText().toString();
-                    firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    btnCreate.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                if (isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())) {
-                                    if (rdoAdmin.isChecked()) {
-                                        String code = databaseReference.push().getKey();
-                                        Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 4,code);
-                                        ref.child(code).setValue(account)
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        Toast.makeText(AddAccountAdminActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(AddAccountAdminActivity.this, AccountAdminActivity.class);
-                                                        startActivity(intent);
-                                                    }
-                                                });
-                                    }
-                                }
+                        public void onClick(View view) {
+                            if(edtName.getText().toString().isEmpty()){
+                                Toast.makeText(AddAccountAdminActivity.this, "Bạn chưa nhập tên người dùng", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddAccountAdminActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                            else if(edtPhone.getText().toString().isEmpty()){
+                                Toast.makeText(AddAccountAdminActivity.this, "Bạn chưa nhập số điện thoại", Toast.LENGTH_SHORT).show();
+                            }
+                            else if(edtEmail.getText().toString().isEmpty()){
+                                Toast.makeText(AddAccountAdminActivity.this, "Bạn chưa nhập Email", Toast.LENGTH_SHORT).show();
+                            }
+                            else if(edtPass.getText().toString().isEmpty()){
+                                Toast.makeText(AddAccountAdminActivity.this, "Bạn chưa nhập mật khẩu", Toast.LENGTH_SHORT).show();
+                            }
+                            else if(edtRe_Password.getText().toString().isEmpty()){
+                                Toast.makeText(AddAccountAdminActivity.this, "Bạn chưa nhập lại mật khẩu", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                final FirebaseDatabase db = FirebaseDatabase.getInstance();
+                                final DatabaseReference ref = db.getReference("Account");
+                                String email = edtEmail.getText().toString();
+                                String pass = edtPass.getText().toString();
+                                String code = databaseReference.push().getKey();
+                                firebaseAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            if (isValidEmail(edtEmail.getText().toString().trim()) && isValidPhone(edtPhone.getText().toString().trim()) && isValidPassword(edtPass.getText().toString().trim()) && edtPass.getText().toString().equals(edtRe_Password.getText().toString())) {
+                                                String ID = firebaseAuth.getCurrentUser().getUid();
+                                                Account account = new Account(edtPhone.getText().toString(), edtEmail.getText().toString(), edtPass.getText().toString(), edtName.getText().toString(), 4,ID);
+                                                ref.child(ID).setValue(account)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                Toast.makeText(AddAccountAdminActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                                                                Intent intent = new Intent(AddAccountAdminActivity.this, AccountAdminActivity.class);
+                                                                startActivity(intent);
+                                                            }
+                                                        });
+                                            }
+                                        } else {
+                                            Toast.makeText(AddAccountAdminActivity.this, "Xác thực không thành công", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(AddAccountAdminActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
                         }
                     });
                 }

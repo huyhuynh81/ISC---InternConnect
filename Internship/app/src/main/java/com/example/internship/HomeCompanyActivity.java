@@ -88,8 +88,8 @@ public class HomeCompanyActivity extends AppCompatActivity {
                         intent.putExtra("acc", Username);
                         startActivity(intent);
                         break;
-                    case R.id.Back:
-                        Intent intent1 = new Intent(HomeCompanyActivity.this, HomeAdminActivity.class);
+                    case R.id.History:
+                        Intent intent1 = new Intent(HomeCompanyActivity.this, JobAppActivity.class);
                         intent1.putExtra("acc",Username);
                         startActivity(intent1);
                         CustomIntent.customType(HomeCompanyActivity.this,"fadein-to-fadeout");

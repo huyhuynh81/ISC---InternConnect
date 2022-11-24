@@ -46,6 +46,14 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             }
         });
 
+        btnHomeBack = findViewById(R.id.btnHomeBack);
+        btnHomeBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         dialog = new Dialog(this);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {

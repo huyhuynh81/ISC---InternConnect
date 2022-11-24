@@ -117,8 +117,6 @@ public class DetailsAccountAdminActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Toast.makeText(DetailsAccountAdminActivity.this, "Update Successfully", Toast.LENGTH_SHORT).show();
-                                        Intent inten = new Intent (DetailsAccountAdminActivity.this,AccountAdminActivity.class);
-                                        startActivity(inten);
                                     }
                                 });
                             }
