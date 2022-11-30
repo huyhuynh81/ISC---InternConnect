@@ -28,7 +28,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="80dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -36,8 +36,8 @@
 
                 <ImageView
                     android:id="@+id/imgLogo_admin"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
                     android:contentDescription="@null" />
             </LinearLayout>
@@ -52,8 +52,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
+                    android:layout_marginLeft="5dp"
                     android:textColor="@android:color/background_dark"
-                    android:textSize="15sp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -63,11 +64,12 @@
 
                     <TextView
                         android:id="@+id/txtName_Company_Admin"
-                        android:layout_width="220sp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:padding="1dp"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="15sp" />
+                        android:textSize="17sp" />
 
                 </LinearLayout>
 

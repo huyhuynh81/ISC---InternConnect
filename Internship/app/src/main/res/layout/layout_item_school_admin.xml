@@ -45,7 +45,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="55dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -53,8 +53,8 @@
                 <ImageView
                     android:id="@+id/imgLogo"
                     android:background="@drawable/user"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:contentDescription="@null" />
             </LinearLayout>
@@ -72,9 +72,11 @@
                         android:id="@+id/txtNameSchool"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
                         android:padding="3dp"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@android:color/background_dark"
-                        android:textSize="17sp"
+                        android:textSize="20sp"
                         android:enabled="false"
                         android:textStyle="bold" />
 
@@ -90,8 +92,9 @@
                         android:layout_width="230dp"
                         android:layout_height="wrap_content"
                         android:padding="1dp"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="15sp" />
+                        android:textSize="17sp" />
 
                 </LinearLayout>
             </LinearLayout>
